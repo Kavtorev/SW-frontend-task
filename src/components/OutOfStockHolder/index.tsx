@@ -1,0 +1,1 @@
+export { OutOfStockHolder } from './styles';
