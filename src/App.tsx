@@ -1,22 +1,47 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
-import { CartPage, ProductDescriptionPage, ProductListingPage } from './pages';
+import { CartPage, CategoryPage, ProductPage } from './pages';
 import { Normalize } from 'styled-normalize';
+import { StyledContainer, Header } from './components';
+import { connector, PropsFromRedux } from './store';
+import CartOverlay from './components/CartOverlay/CartOverlay';
 
-function App() {
-  return (
-    <div className=''>
-      <GlobalStyle />
-      <Normalize />
-      <h1>Header!</h1>
-      <Switch>
-        <Route path='/' exact component={ProductListingPage} />
-        <Route path='/cart' component={CartPage} />
-        <Route path='/details/:id' component={ProductDescriptionPage} />
-      </Switch>
-    </div>
-  );
+interface Props extends PropsFromRedux {}
+
+class App extends React.Component<Props> {
+  componentDidMount() {
+    this.props.fetchInitialData();
+  }
+
+  render() {
+    const { isCartPopperOpen, initialDataLoading, initialDataError } =
+      this.props;
+
+    if (initialDataLoading) {
+      return <h1>...</h1>;
+    }
+
+    if (initialDataError) {
+      <h1>Refresh the page...</h1>;
+    }
+    return (
+      <>
+        <GlobalStyle />
+        <Normalize />
+        <Header />
+        {isCartPopperOpen && <CartOverlay />}
+        <StyledContainer>
+          <Switch>
+            <Route path='/cart' component={CartPage} />
+            <Route path='/:category' exact component={CategoryPage} />
+            <Route path='/details/:id' component={ProductPage} />
+            <Redirect to='/all' />
+          </Switch>
+        </StyledContainer>
+      </>
+    );
+  }
 }
 
-export default App;
+export default connector(App);
