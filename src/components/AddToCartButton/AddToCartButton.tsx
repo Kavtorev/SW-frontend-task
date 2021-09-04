@@ -1,16 +1,32 @@
 import React from 'react';
+import { IProduct } from '../../shared';
 import { connector, PropsFromRedux } from '../../store';
 
 interface Props extends PropsFromRedux {
-  render: (
-    handleClick: PropsFromRedux['addProductToCart']
-  ) => React.ReactElement;
+  product: IProduct;
+  render: (func: () => void) => React.ReactElement;
 }
 
 class AddToCartButton extends React.Component<Props> {
+  handleCartClick = () => {
+    const {
+      product,
+      addProductToCart,
+      changeProductQuantity,
+      cartProducts: { mappedQuantities },
+    } = this.props;
+
+    if (product.id in mappedQuantities) {
+      changeProductQuantity({ productId: product.id, quantity: 1 });
+      return;
+    }
+
+    addProductToCart(product);
+  };
+
   render() {
-    const { render, addProductToCart } = this.props;
-    return <>{render(addProductToCart)}</>;
+    const { render } = this.props;
+    return <>{render(() => this.handleCartClick())}</>;
   }
 }
 
