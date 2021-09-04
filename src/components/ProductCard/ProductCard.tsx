@@ -32,6 +32,7 @@ export class ProductCard extends React.Component<Props> {
               <>
                 {inStock ? (
                   <AddToCartButton
+                    product={this.props.product}
                     render={(handleClick) => {
                       return (
                         <CartButton
@@ -39,7 +40,7 @@ export class ProductCard extends React.Component<Props> {
                             event: React.MouseEvent<HTMLButtonElement>
                           ) => {
                             event.stopPropagation();
-                            handleClick(this.props.product);
+                            handleClick();
                           }}
                         >
                           <img src={iconsrc} alt='Add to Cart' />
@@ -60,6 +61,3 @@ export class ProductCard extends React.Component<Props> {
     );
   }
 }
-
-// should this button appear if I hover on an image or on the whole
-// container?

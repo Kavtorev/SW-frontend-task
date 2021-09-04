@@ -31,17 +31,20 @@ export const CartButton = styled(Button)`
   color: #ffffff;
 `;
 
-export const ProductDescription = styled.p`
-  width: 292px;
+export const ProductDescription = styled.div`
   height: 103px;
   font-family: var(--roboto-ff);
   font-weight: var(--fw-normal);
   line-height: 1.625;
   ${ScrollY}
+
+  & > * {
+    font-family: var(--roboto-ff);
+  }
 `;
 
 export const ProductImageWrapper = styled.div`
-  width: 610px;
+  /* width: 610px; */
   height: 510px;
   margin-right: var(--m-xl);
 `;
@@ -50,4 +53,9 @@ export const ProductPagePrimaryDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 400px;
+`;
+
+export const AttributeButtonsContainer = styled.div`
+  margin-bottom: var(--m-s);
 `;

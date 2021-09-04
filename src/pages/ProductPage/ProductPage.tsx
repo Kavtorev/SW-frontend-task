@@ -4,7 +4,6 @@ import { AttributeButton } from '../../components/AttributeButton';
 import { ProductAdvancedTitle } from '../../components/ProductAdvancedTitle';
 import { AttributeButtonsGroup } from '../../components/AttributeButtonsGroup';
 import DOMPurify from 'dompurify';
-import { Title } from '../../common/RobotoCondensedTitle/styles';
 import { Price } from '../../components/Price';
 import {
   CartButton,
@@ -14,12 +13,13 @@ import {
   ProductPageGallery,
   ProductPagePrimaryDetails,
   ProductPageWrapper,
+  AttributeButtonsContainer,
 } from './styles';
 import { connector, PropsFromRedux } from '../../store';
 import { RouteComponentProps } from 'react-router-dom';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { OutOfStockHolder } from '../../components/OutOfStockHolder';
-
+import { nanoid } from 'nanoid';
 interface MatchProps {
   id: string;
 }
@@ -62,7 +62,16 @@ class ProductPage extends React.Component<Props, State> {
       return <></>;
     }
 
-    const { gallery, brand, name, description, prices, inStock } = product;
+    const {
+      gallery,
+      brand,
+      name,
+      description,
+      prices,
+      inStock,
+      attributes,
+      id,
+    } = product;
 
     return (
       <section>
@@ -71,6 +80,7 @@ class ProductPage extends React.Component<Props, State> {
             {gallery.map((imgSrc) => {
               return (
                 <ImageCard
+                  key={nanoid()}
                   src={imgSrc}
                   width='80px'
                   height='80px'
@@ -102,25 +112,47 @@ class ProductPage extends React.Component<Props, State> {
             </ProductImageWrapper>
             <ProductPagePrimaryDetails>
               <ProductAdvancedTitle brand={brand} name={name} />
-              <Title>Size:</Title>
-              <AttributeButtonsGroup
-                render={() => (
-                  <>
-                    <AttributeButton>XS</AttributeButton>
-                    <AttributeButton selected>S</AttributeButton>
-                    <AttributeButton>M</AttributeButton>
-                    <AttributeButton>L</AttributeButton>
-                  </>
-                )}
-              />
+              {attributes.map((set) => {
+                return (
+                  <AttributeButtonsContainer key={nanoid()}>
+                    <AttributeButtonsGroup
+                      name={set.name}
+                      showName={true}
+                      productId={id}
+                      attributeId={set.id}
+                      render={(handleSelection, selectedItemId) => {
+                        return (
+                          <>
+                            {set.items.map((item) => {
+                              return (
+                                <AttributeButton
+                                  key={nanoid()}
+                                  selected={selectedItemId === item.id}
+                                  value={item.value}
+                                  attributeType={set.type}
+                                  handleClick={() =>
+                                    handleSelection()(id, set.id, item.id)
+                                  }
+                                >
+                                  {item.displayValue}
+                                </AttributeButton>
+                              );
+                            })}
+                          </>
+                        );
+                      }}
+                    />
+                  </AttributeButtonsContainer>
+                );
+              })}
+
               <Price prices={prices} size={'large'} />
               {inStock && (
                 <AddToCartButton
+                  product={product}
                   render={(handleClick) => {
                     return (
-                      <CartButton onClick={() => handleClick(product)}>
-                        Add to cart
-                      </CartButton>
+                      <CartButton onClick={handleClick}>Add to cart</CartButton>
                     );
                   }}
                 />

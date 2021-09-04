@@ -3,7 +3,7 @@ import { connector, PropsFromRedux } from '../../store';
 import { ProductCard } from '../ProductCard';
 import { ProductsListContainer } from './styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-
+import { nanoid } from 'nanoid';
 interface MathProps {
   id: string;
 }
@@ -27,7 +27,7 @@ class ProductsList extends React.Component<Props> {
     const renderedProducts = filteredProducts.map((product, idx) => {
       return (
         <ProductCard
-          key={product.id}
+          key={nanoid()}
           product={product}
           handleOnClick={this.handleProductCardClick}
         />
@@ -37,6 +37,7 @@ class ProductsList extends React.Component<Props> {
     if (renderedProducts.length % 3 !== 0)
       renderedProducts.push(
         <li
+          key={nanoid()}
           style={{
             width: '386px',
             height: '444px',

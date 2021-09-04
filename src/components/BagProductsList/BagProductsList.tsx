@@ -3,57 +3,13 @@ import minussrc from './assets/minus-square.svg';
 import plussrc from './assets/plus-square.svg';
 import { ProductBagItem } from '../ProductBagItem';
 import { AttributeButton } from '../AttributeButton';
-import { BagProductsListWrapper } from './styles';
+import { BagProductsListWrapper, AttributeButtonsContainer } from './styles';
 import { ProductImageCarousel } from '../ProductImageCarousel';
 import { ProductAdvancedTitle } from '../ProductAdvancedTitle';
 import { AttributeButtonsGroup } from '../AttributeButtonsGroup';
 import { connector, PropsFromRedux } from '../../store';
 import { Price } from '../Price';
-
-const products = [
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '50.00',
-    inStock: true,
-  },
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '50.00',
-    inStock: true,
-  },
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '$50.00',
-    inStock: true,
-  },
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '$50.00',
-    inStock: false,
-  },
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '$50.00',
-    inStock: true,
-  },
-  {
-    gallery:
-      'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-    name: 'Play Station 5',
-    price: '$50.00',
-    inStock: true,
-  },
-];
+import { nanoid } from 'nanoid';
 
 interface Props extends PropsFromRedux {}
 
@@ -62,15 +18,16 @@ class BagProductsList extends React.Component<Props> {
     const {
       cartProducts: { products, mappedQuantities },
     } = this.props;
-    console.log('products:', products);
     return (
       <BagProductsListWrapper>
-        {products.map(({ id, gallery, brand, name, prices }) => {
+        {products.map(({ id, gallery, brand, name, prices, attributes }) => {
           return (
             <ProductBagItem
+              key={nanoid()}
               productId={id}
               increaseSrc={plussrc}
               decreaseSrc={minussrc}
+              quantity={mappedQuantities[id]}
               rightRender={<ProductImageCarousel gallery={gallery} />}
               productMeta={
                 <>
@@ -81,17 +38,39 @@ class BagProductsList extends React.Component<Props> {
                     size='large'
                     multiplyBy={mappedQuantities[id]}
                   />
-                  <AttributeButtonsGroup
-                    showName={false}
-                    render={() => {
-                      return (
-                        <>
-                          <AttributeButton>S</AttributeButton>
-                          <AttributeButton selected={true}>M</AttributeButton>
-                        </>
-                      );
-                    }}
-                  />
+
+                  {attributes.map((set) => {
+                    return (
+                      <AttributeButtonsContainer key={nanoid()}>
+                        <AttributeButtonsGroup
+                          showName={false}
+                          productId={id}
+                          attributeId={set.id}
+                          render={(handleSelection, selectedItemId) => {
+                            return (
+                              <>
+                                {set.items.map((item) => {
+                                  return (
+                                    <AttributeButton
+                                      key={nanoid()}
+                                      attributeType={set.type}
+                                      value={item.value}
+                                      selected={selectedItemId === item.id}
+                                      handleClick={() =>
+                                        handleSelection()(id, set.id, item.id)
+                                      }
+                                    >
+                                      {item.displayValue}
+                                    </AttributeButton>
+                                  );
+                                })}
+                              </>
+                            );
+                          }}
+                        />
+                      </AttributeButtonsContainer>
+                    );
+                  })}
                 </>
               }
             />

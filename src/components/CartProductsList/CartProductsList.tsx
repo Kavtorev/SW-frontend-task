@@ -1,5 +1,8 @@
 import React from 'react';
-import { CartProductsListWrapper } from './styles';
+import {
+  CartProductsListWrapper,
+  AttributeButtonsGroupWrapper,
+} from './styles';
 import minussrc from './assets/minus-square.svg';
 import plussrc from './assets/plus-square.svg';
 import ImageCard from '../../common/ImageCard/ImageCard';
@@ -9,6 +12,7 @@ import { Price } from '../Price';
 import { AttributeButtonsGroup } from '../AttributeButtonsGroup';
 import { connector, PropsFromRedux } from '../../store';
 import { ProductBagItem } from '../ProductBagItem';
+import { nanoid } from 'nanoid';
 
 interface Props extends PropsFromRedux {}
 
@@ -19,16 +23,22 @@ class CartProductsList extends React.Component<Props> {
     } = this.props;
     return (
       <CartProductsListWrapper>
-        {products.map(({ brand, name, id, gallery, prices }) => {
+        {products.map(({ brand, name, id, gallery, prices, attributes }) => {
           return (
             <ProductBagItem
-              key={id}
+              key={nanoid()}
               productId={id}
               increaseSrc={plussrc}
               decreaseSrc={minussrc}
               quantity={mappedQuantities[id]}
+              productMetaStyles={{ maxWidth: '140px' }}
               rightRender={
-                <ImageCard src={gallery[0]} width='105px' height='100%' />
+                <ImageCard
+                  src={gallery[0]}
+                  width='105px'
+                  height='100%'
+                  styleImage={{ objectFit: 'contain' }}
+                />
               }
               productMeta={
                 <>
@@ -44,20 +54,40 @@ class CartProductsList extends React.Component<Props> {
                     size='small'
                     multiplyBy={mappedQuantities[id]}
                   />
-                  <AttributeButtonsGroup
-                    showName={false}
-                    name={'Sizes'}
-                    render={() => {
+                  <AttributeButtonsGroupWrapper>
+                    {attributes.map((set) => {
                       return (
-                        <>
-                          <AttributeButton size='small'>S</AttributeButton>
-                          <AttributeButton size='small' selected={true}>
-                            M
-                          </AttributeButton>
-                        </>
+                        <AttributeButtonsGroup
+                          key={nanoid()}
+                          showName={false}
+                          productId={id}
+                          attributeId={set.id}
+                          render={(handleSelection, selectedItemId) => {
+                            return (
+                              <>
+                                {set.items.map((item) => {
+                                  return (
+                                    <AttributeButton
+                                      key={nanoid()}
+                                      attributeType={set.type}
+                                      value={item.value}
+                                      size='small'
+                                      selected={selectedItemId === item.id}
+                                      handleClick={() =>
+                                        handleSelection()(id, set.id, item.id)
+                                      }
+                                    >
+                                      {item.displayValue}
+                                    </AttributeButton>
+                                  );
+                                })}
+                              </>
+                            );
+                          }}
+                        />
                       );
-                    }}
-                  />
+                    })}
+                  </AttributeButtonsGroupWrapper>
                 </>
               }
             />

@@ -15,6 +15,7 @@ interface Props extends PropsFromRedux {
   decreaseSrc: string;
   rightRender: React.ReactElement;
   productMeta: React.ReactElement;
+  productMetaStyles?: React.CSSProperties;
   quantity?: number;
   productId: string;
 }
@@ -42,11 +43,19 @@ class ProductBagItem extends React.Component<Props> {
   };
 
   render() {
-    const { increaseSrc, decreaseSrc, rightRender, productMeta, quantity } =
-      this.props;
+    const {
+      increaseSrc,
+      decreaseSrc,
+      rightRender,
+      productMeta,
+      quantity,
+      productMetaStyles,
+    } = this.props;
     return (
       <ProductBagItemWrapper>
-        <ProductBagItemLeft>{productMeta}</ProductBagItemLeft>
+        <ProductBagItemLeft style={{ ...productMetaStyles }}>
+          {productMeta}
+        </ProductBagItemLeft>
         <ProductBagItemRight>
           <ProductBagItemSettings>
             <ProductBagItemIncreaseButton onClick={this.handleIncreaseClick}>

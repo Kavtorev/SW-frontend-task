@@ -8,5 +8,5 @@ export const CategoryPageTitle = styled.h1`
 `;
 
 export const ProductsListWrapper = styled.div`
-  margin-top: 5.4em;
+  margin-top: 4em;
 `;

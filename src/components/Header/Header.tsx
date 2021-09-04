@@ -12,7 +12,7 @@ import Cart from '../Cart/Cart';
 import CurrencySwitcher from '../CurrencySwitcher/CurrencySwitcher';
 import { connector, PropsFromRedux } from '../../store';
 import { NavLink } from 'react-router-dom';
-
+import { nanoid } from 'nanoid';
 interface Props extends PropsFromRedux {}
 
 class Header extends React.Component<Props> {
@@ -23,7 +23,7 @@ class Header extends React.Component<Props> {
         <Navigation>
           <List>
             {categories.map(({ name }) => (
-              <Item key={name}>
+              <Item key={nanoid()}>
                 <NavLink
                   onClick={() => selectCategory(name)}
                   to={`/${name}`}
@@ -50,7 +50,5 @@ class Header extends React.Component<Props> {
     );
   }
 }
-
-// border-bottom: 2px solid var(--c-primary);
 
 export default connector(Header);

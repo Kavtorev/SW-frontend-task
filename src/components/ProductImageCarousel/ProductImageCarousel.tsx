@@ -22,16 +22,6 @@ class ProductImageCarousel extends React.Component<Props, State> {
 
   handleStepClick = (step: number) => {
     const len = this.props.gallery.length;
-    console.log(
-      'current Index:',
-      this.state.currentIndex,
-      'step',
-      step,
-      'length:',
-      len,
-      'calculated',
-      (this.state.currentIndex + step + len) % len
-    );
     step >= 0
       ? this.setState({ currentIndex: (this.state.currentIndex + 1) % len })
       : this.setState({
@@ -40,8 +30,6 @@ class ProductImageCarousel extends React.Component<Props, State> {
   };
 
   render() {
-    // console.log('current index:', this.state.currentIndex, 'step', step);
-    // console.log('gallery length', this.props.gallery.length);
     return (
       <ImageCard
         src={this.props.gallery[this.state.currentIndex]}
