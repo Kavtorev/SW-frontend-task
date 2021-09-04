@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Truncate } from '../../common/Utils/styles';
 
 interface Props {
   disabled?: boolean;
@@ -16,6 +17,7 @@ export const ProductCardContainer = styled.li<Props>`
   background-color: ${(props) => (props.disabled ? '#FFFFFF' : 'transparent')};
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
   cursor: pointer;
+  margin-bottom: 4em;
 
   :hover {
     box-shadow: ${(props) =>
@@ -31,6 +33,7 @@ export const ProductName = styled.p`
   font-weight: var(--fw-light);
   margin-top: 1.5em;
   font-size: var(--fs-s);
+  ${Truncate}
 `;
 
 export const CartButton = styled.button`

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Truncate } from '../../common/Utils/styles';
 
 const baseSpan = styled.span`
   font-size: var(--fs-l);
@@ -9,7 +10,9 @@ const baseSpan = styled.span`
 
 export const Brand = styled(baseSpan)`
   font-weight: var(--fw-semibold);
+  ${Truncate}
 `;
 export const Name = styled(baseSpan)`
   font-weight: var(--fw-normal);
+  ${Truncate}
 `;

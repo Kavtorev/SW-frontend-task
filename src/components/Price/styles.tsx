@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Title } from '../../common/RobotoCondensedTitle/styles';
+import { Truncate } from '../../common/Utils/styles';
 
 interface Props {
   size?: string;
@@ -32,10 +33,13 @@ const getStyles = (size: string) => {
   }
 };
 
-export const PriceTitle = styled(Title)``;
+export const PriceTitle = styled(Title)`
+  margin-bottom: calc(var(--m-xs) - 0.125em);
+`;
 
 export const StyledProductPrice = styled.p<Props>`
   font-weight: ${(props) => getStyles(props.size || 'normal').fontWeight};
   font-size: ${(props) => getStyles(props.size || 'normal').fontSize};
   line-height: ${(props) => getStyles(props.size || 'normal').lineHeight};
+  ${Truncate}
 `;
