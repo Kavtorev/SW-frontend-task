@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { ICategory, IProduct } from '../../shared';
+import { IAttribute, IAttributeSet, ICategory, IProduct } from '../../shared';
 import { client } from '../../graphql';
 import { GET_INITIAL_DATA } from '../../graphql/queries';
 
@@ -24,6 +24,20 @@ export type ActionTypes =
   | {
       type: 'CHANGE_PRODUCT_QUANTITY';
       payload: { productId: IProduct['id']; quantity: number };
+    }
+  | {
+      type: 'SELECT_ATTRIBUTE';
+      payload: {
+        productId: IProduct['id'];
+        meta: { attrId: IAttributeSet['id']; itemId: IAttribute['id'] };
+      };
+    }
+  | {
+      type: 'UNSELECT_ATTRIBUTE';
+      payload: {
+        productId: IProduct['id'];
+        attrId: IAttributeSet['id'];
+      };
     };
 
 export const requestInitialData = async (dispatch: Dispatch<ActionTypes>) => {

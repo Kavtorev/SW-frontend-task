@@ -1,6 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { uiReducer, requestInitialDataReducer, cartRedcucer } from './reducers';
+import {
+  uiReducer,
+  requestInitialDataReducer,
+  cartRedcucer,
+  attributeReducer,
+} from './reducers';
 import { createLogger } from 'redux-logger';
 import { requestInitialData } from './actions';
 import { IProduct } from '../shared';
@@ -9,6 +14,7 @@ export const rootReducers = combineReducers({
   uiReducer,
   requestInitialDataReducer,
   cartRedcucer,
+  attributeReducer,
 });
 const logger = createLogger();
 export const store = createStore(rootReducers, applyMiddleware(logger));
@@ -30,6 +36,7 @@ const mapState = (state: RootState) => ({
     totalQuantity: state.cartRedcucer.total,
   },
   fetchedProducts: state.requestInitialDataReducer.products,
+  attributeSelections: state.attributeReducer.mappedAttributeSelections,
 });
 
 const mapDispatch = (dispatch: AppDispatch) => ({
@@ -60,6 +67,15 @@ const mapDispatch = (dispatch: AppDispatch) => ({
       type: 'CHANGE_PRODUCT_QUANTITY',
       payload: { productId, quantity },
     }),
+
+  selectAttribute: (productId: string, attrId: string, itemId: string) =>
+    dispatch({
+      type: 'SELECT_ATTRIBUTE',
+      payload: { productId, meta: { attrId, itemId } },
+    }),
+
+  unSelectAttribute: (productId: string, attrId: string) =>
+    dispatch({ type: 'UNSELECT_ATTRIBUTE', payload: { productId, attrId } }),
 });
 
 export const connector = connect(mapState, mapDispatch);
