@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyledAttributeButton, StyledProps } from './styles';
-import { IAttribute } from '../../shared';
 
 interface Props extends StyledProps {
   handleClick?: () => void;
@@ -8,14 +7,23 @@ interface Props extends StyledProps {
 
 export class AttributeButton extends React.Component<Props> {
   render() {
-    const { selected, size, children, handleClick } = this.props;
+    const {
+      selected,
+      size,
+      children,
+      handleClick,
+      attributeType = 'text',
+      value = 'inherit',
+    } = this.props;
     return (
       <StyledAttributeButton
+        value={value}
+        attributeType={attributeType}
         selected={selected}
         size={size}
         onClick={handleClick}
       >
-        {children}
+        {attributeType === 'text' && children}
       </StyledAttributeButton>
     );
   }

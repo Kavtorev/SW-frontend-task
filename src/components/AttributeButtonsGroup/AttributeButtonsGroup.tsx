@@ -63,12 +63,12 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
   render() {
     const { render, name = '', showName = true } = this.props;
     return (
-      <div>
-        {showName && <AttributeName>{name}</AttributeName>}
+      <>
+        {showName && <AttributeName>{`${name}:`}</AttributeName>}
         <AttributeButtonsGroupWrapper>
           {render(this.preHandleSelection, this.state.selectedItemId)}
         </AttributeButtonsGroupWrapper>
-      </div>
+      </>
     );
   }
 }
