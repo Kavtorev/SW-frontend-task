@@ -24,6 +24,7 @@ export type AppDispatch = typeof store.dispatch;
 
 const mapState = (state: RootState) => ({
   isCartPopperOpen: state.uiReducer.isCartPopperOpen,
+  isCurrencyMenuOpen: state.uiReducer.isCurrencyMenuOpen,
   selectedCurrency: state.uiReducer.selectedCurrency,
   selectedCategory: state.uiReducer.selectedCategory,
   categories: state.requestInitialDataReducer.categories,
@@ -41,6 +42,9 @@ const mapState = (state: RootState) => ({
 
 const mapDispatch = (dispatch: AppDispatch) => ({
   closeOrOpenCartPopper: () => dispatch({ type: 'CLOSE_OR_OPEN_CART_POPPER' }),
+
+  closeOrOpenCurrencyMenu: () =>
+    dispatch({ type: 'CLOSE_OR_OPEN_CURRENCY_MENU' }),
 
   selectCurrency: (payload: string) =>
     dispatch({ type: 'SELECT_CURRENCY', payload }),

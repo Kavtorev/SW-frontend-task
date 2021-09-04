@@ -4,20 +4,34 @@ import {
   CurrencyMenuButton,
   CurrencyMenuOptions,
   CurrencyMenuOption,
+  CurrencyMenuOptionsWrapper,
 } from './styles';
 import chevronsrc from './assets/chevron_down.svg';
 import { connector, PropsFromRedux } from '../../store';
 import { currencyMapper } from '../../shared/mappers';
-
+import { nanoid } from 'nanoid';
 interface Props extends PropsFromRedux {}
 
 class CurrencySwitcher extends React.Component<Props> {
   render() {
-    const { selectedCurrency, selectCurrency, currencies } = this.props;
+    const {
+      selectedCurrency,
+      selectCurrency,
+      currencies,
+      closeOrOpenCurrencyMenu,
+      isCurrencyMenuOpen,
+    } = this.props;
+
     const renderedCurrencies = currencies.map((name) => {
       const icon = currencyMapper[name] || '#';
       return (
-        <CurrencyMenuOption key={name} onClick={() => selectCurrency(name)}>
+        <CurrencyMenuOption
+          key={nanoid()}
+          onClick={() => {
+            selectCurrency(name);
+            closeOrOpenCurrencyMenu();
+          }}
+        >
           {`${icon} ${name}`}
         </CurrencyMenuOption>
       );
@@ -25,11 +39,20 @@ class CurrencySwitcher extends React.Component<Props> {
 
     return (
       <CurrencyMenuContainer>
-        <CurrencyMenuButton>
+        <CurrencyMenuButton
+          onClick={() => closeOrOpenCurrencyMenu()}
+          isMenuOpened={isCurrencyMenuOpen}
+        >
           {currencyMapper[selectedCurrency] || '#'}{' '}
           <img src={chevronsrc} alt='' />
         </CurrencyMenuButton>
-        <CurrencyMenuOptions>{renderedCurrencies}</CurrencyMenuOptions>
+        <CurrencyMenuOptionsWrapper>
+          <CurrencyMenuOptions
+            style={{ display: isCurrencyMenuOpen ? 'flex' : 'none' }}
+          >
+            {renderedCurrencies}
+          </CurrencyMenuOptions>
+        </CurrencyMenuOptionsWrapper>
       </CurrencyMenuContainer>
     );
   }

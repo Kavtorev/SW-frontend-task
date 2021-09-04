@@ -4,4 +4,5 @@ export const currencyMapper: { [currencyId: string]: string } = {
   EUR: '€',
   RUB: '₽',
   GBP: '£',
+  AUD: 'A$',
 };
