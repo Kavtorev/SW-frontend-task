@@ -8,7 +8,6 @@ import {
   CartPopperFooter,
   CartPopperHeader,
   ItemsQuantity,
-  ViewBagLink,
   CheckOutButton,
   CartPopperTotalWrapper,
   Total,
@@ -37,8 +36,9 @@ class CartPopper extends React.Component<Props> {
 
       if (foundProduct) {
         for (let price of foundProduct.prices) {
-          hashMap[price.currency] +=
-            Math.round(price.amount * mappedQuantities[productId] * 100) / 100;
+          hashMap[price.currency] += +(
+            price.amount * mappedQuantities[productId]
+          ).toFixed(2);
         }
       }
     }
@@ -71,7 +71,12 @@ class CartPopper extends React.Component<Props> {
           <Price
             prices={this.getTotalPrice()}
             showTitle={false}
-            style={{ fontWeight: 700, lineHeight: 1.125, fontSize: '1rem' }}
+            style={{
+              fontWeight: 700,
+              lineHeight: 1.125,
+              fontSize: '1rem',
+              maxWidth: '200px',
+            }}
           />
         </CartPopperTotalWrapper>
         <CartPopperFooter>
