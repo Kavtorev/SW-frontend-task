@@ -3,11 +3,9 @@ import { ActionTypes } from '../actions';
 
 type InitialCartStateType = {
   products: IProduct[];
-  mappedQuantities: { [id: string]: number };
+  mappedQuantities: { [productId: string]: number };
   total: number;
 };
-
-// productId + quantity
 
 const initialDataState: InitialCartStateType = {
   products: [],
@@ -21,10 +19,14 @@ export const cartRedcucer = (
 ) => {
   switch (action.type) {
     case 'ADD_PRODUCT_TO_CART':
+      if (action.payload.id in state.mappedQuantities) return state;
       return {
         ...state,
         products: state.products.concat(action.payload),
-        mappedQuantities: { ...state.mappedQuantities, [action.payload.id]: 1 },
+        mappedQuantities: {
+          ...state.mappedQuantities,
+          [action.payload.id]: 1,
+        },
         total: state.total + 1,
       };
     case 'REMOVE_PRODUCT_FROM_CART':
