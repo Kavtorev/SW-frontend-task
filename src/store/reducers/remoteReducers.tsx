@@ -1,5 +1,5 @@
 import { ICategory, IProduct } from '../../shared';
-import { ActionTypes } from '../actions';
+import { RemoteActionsType } from '../actions';
 
 type InitialDataStateType = {
   categories: ICategory[];
@@ -19,7 +19,7 @@ const initialDataState: InitialDataStateType = {
 
 export const requestInitialDataReducer = (
   state: InitialDataStateType = initialDataState,
-  action: ActionTypes
+  action: RemoteActionsType
 ) => {
   switch (action.type) {
     case 'REQUEST_INITIAL_DATA_ERROR':

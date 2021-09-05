@@ -1,4 +1,4 @@
-import { ActionTypes } from '../actions';
+import { UiActionsType } from '../actions';
 
 type InitialStateType = {
   isCartPopperOpen: boolean;
@@ -16,7 +16,7 @@ const initialState = {
 
 export const uiReducer = (
   state: InitialStateType = initialState,
-  action: ActionTypes
+  action: UiActionsType
 ) => {
   switch (action.type) {
     case 'CLOSE_OR_OPEN_CART_POPPER':

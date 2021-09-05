@@ -1,5 +1,5 @@
 import { IAttribute, IAttributeSet, IProduct } from '../../shared';
-import { ActionTypes } from '../actions';
+import { AttributeActionsType } from '../actions';
 
 interface IAttributeMeta {
   attrId: IAttributeSet['id'];
@@ -18,7 +18,7 @@ const initialAtrributeState: InitialAtrributeStateType = {
 
 export const attributeReducer = (
   state: InitialAtrributeStateType = initialAtrributeState,
-  action: ActionTypes
+  action: AttributeActionsType
 ) => {
   switch (action.type) {
     case 'SELECT_ATTRIBUTE':

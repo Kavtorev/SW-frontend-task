@@ -1,5 +1,5 @@
 import { IProduct } from '../../shared';
-import { ActionTypes } from '../actions';
+import { CartActionsType } from '../actions';
 
 type InitialCartStateType = {
   products: IProduct[];
@@ -15,7 +15,7 @@ const initialDataState: InitialCartStateType = {
 
 export const cartRedcucer = (
   state: InitialCartStateType = initialDataState,
-  action: ActionTypes
+  action: CartActionsType
 ) => {
   switch (action.type) {
     case 'ADD_PRODUCT_TO_CART':
