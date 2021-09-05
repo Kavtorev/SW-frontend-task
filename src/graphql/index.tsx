@@ -13,3 +13,5 @@ export class Apollo extends React.Component {
     );
   }
 }
+
+export * from './queries';

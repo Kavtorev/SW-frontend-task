@@ -54,7 +54,7 @@ class CartPopper extends React.Component<Props> {
 
   render() {
     const {
-      cartProducts: { totalQuantity, products },
+      cartProducts: { totalQuantity },
     } = this.props;
 
     return (

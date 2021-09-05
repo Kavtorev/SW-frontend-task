@@ -1,5 +1,5 @@
 import { ICategory, IProduct } from '../../shared';
-import { GET_INITIAL_DATA } from '../../graphql/queries';
+import { GET_INITIAL_DATA } from '../../graphql';
 import { client } from '../../graphql';
 import { Dispatch } from 'react';
 

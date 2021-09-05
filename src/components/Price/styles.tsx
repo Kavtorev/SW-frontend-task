@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Title } from '../../common';
-import { Truncate } from '../../common';
+import { Title, Truncate } from '../../common';
 
 interface Props {
   size?: string;
