@@ -23,7 +23,6 @@ export const List = styled.ul`
     display: inline-block;
     text-transform: uppercase;
     margin-right: var(--m-s);
-    padding-top: calc(var(--p-l) + 0.5em);
     height: 100%;
     text-align: center;
     width: 97px;
@@ -38,6 +37,7 @@ export const Item = styled.li`
     height: 100%;
     text-decoration: none;
     color: var(--c-black);
+    padding-top: calc(var(--p-l) + 0.5em);
   }
 `;
 

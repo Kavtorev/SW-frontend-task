@@ -10,6 +10,8 @@ import chevronsrc from './assets/chevron_down.svg';
 import { connector, PropsFromRedux } from '../../store';
 import { currencyMapper } from '../../shared/mappers';
 import { nanoid } from 'nanoid';
+import ClickAwayListener from 'react-click-away-listener';
+
 interface Props extends PropsFromRedux {}
 
 class CurrencySwitcher extends React.Component<Props> {
@@ -46,13 +48,13 @@ class CurrencySwitcher extends React.Component<Props> {
           {currencyMapper[selectedCurrency] || '#'}{' '}
           <img src={chevronsrc} alt='' />
         </CurrencyMenuButton>
-        <CurrencyMenuOptionsWrapper>
-          <CurrencyMenuOptions
-            style={{ display: isCurrencyMenuOpen ? 'flex' : 'none' }}
-          >
-            {renderedCurrencies}
-          </CurrencyMenuOptions>
-        </CurrencyMenuOptionsWrapper>
+        {isCurrencyMenuOpen && (
+          <ClickAwayListener onClickAway={closeOrOpenCurrencyMenu}>
+            <CurrencyMenuOptionsWrapper>
+              <CurrencyMenuOptions>{renderedCurrencies}</CurrencyMenuOptions>
+            </CurrencyMenuOptionsWrapper>
+          </ClickAwayListener>
+        )}
       </CurrencyMenuContainer>
     );
   }
