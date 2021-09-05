@@ -1,10 +1,6 @@
 import React from 'react';
-import ImageCard from '../../common/ImageCard/ImageCard';
-import { AttributeButton } from '../../components/AttributeButton';
-import { ProductAdvancedTitle } from '../../components/ProductAdvancedTitle';
-import { AttributeButtonsGroup } from '../../components/AttributeButtonsGroup';
+import { ImageCard } from '../../common';
 import DOMPurify from 'dompurify';
-import { Price } from '../../components/Price';
 import {
   CartButton,
   ProductDescription,
@@ -17,9 +13,16 @@ import {
 } from './styles';
 import { connector, PropsFromRedux } from '../../store';
 import { RouteComponentProps } from 'react-router-dom';
-import { AddToCartButton } from '../../components/AddToCartButton';
-import { OutOfStockHolder } from '../../components/OutOfStockHolder';
+import {
+  AddToCartButton,
+  OutOfStockHolder,
+  ProductAdvancedTitle,
+  AttributeButtonsGroup,
+  AttributeButton,
+  Price,
+} from '../../components';
 import { nanoid } from 'nanoid';
+
 interface MatchProps {
   id: string;
 }

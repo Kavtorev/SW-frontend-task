@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../common/Button';
+import { Button } from '../../common';
 import { IAttribute, IAttributeSet } from '../../shared';
 export interface StyledProps {
   selected?: boolean;

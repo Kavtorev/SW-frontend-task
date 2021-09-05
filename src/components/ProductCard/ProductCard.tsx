@@ -2,7 +2,7 @@ import React from 'react';
 import { ProductCardContainer, ProductName, CartButton } from './styles';
 import { OutOfStockHolder } from '../OutOfStockHolder';
 import iconsrc from './assets/Circle Icon.svg';
-import ImageCard from '../../common/ImageCard/ImageCard';
+import { ImageCard } from '../../common';
 import { Price } from '../Price';
 import { AddToCartButton } from '../AddToCartButton';
 import { IProduct } from '../../shared';

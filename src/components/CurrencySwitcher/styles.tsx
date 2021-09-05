@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ScrollY } from '../../common/Utils/styles';
+import { ScrollY } from '../../common';
 
 export const CurrencyMenuContainer = styled.div`
   position: relative;

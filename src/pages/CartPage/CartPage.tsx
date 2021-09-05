@@ -1,5 +1,5 @@
 import React from 'react';
-import { BagProductsList } from '../../components/BagProductsList';
+import { BagProductsList } from '../../components';
 import { connector, PropsFromRedux } from '../../store';
 
 import { CartPageTitle } from './styles';

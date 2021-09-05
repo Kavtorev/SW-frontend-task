@@ -3,9 +3,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { CartPage, CategoryPage, ProductPage } from './pages';
 import { Normalize } from 'styled-normalize';
-import { StyledContainer, Header } from './components';
+import { StyledContainer, Header, CartOverlay } from './components';
 import { connector, PropsFromRedux } from './store';
-import CartOverlay from './components/CartOverlay/CartOverlay';
 
 interface Props extends PropsFromRedux {}
 

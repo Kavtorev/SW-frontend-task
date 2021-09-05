@@ -3,7 +3,7 @@ import { PropsFromRedux } from '../../store';
 import { CategoryPageTitle, ProductsListWrapper } from './styles';
 import { connector } from '../../store';
 import { RouteComponentProps } from 'react-router';
-import { ProductsList } from '../../components/ProductsList';
+import { ProductsList } from '../../components';
 
 interface MatchParams {
   category: string;

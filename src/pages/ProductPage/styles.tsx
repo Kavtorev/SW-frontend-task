@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '../../common/Button';
-import { ScrollY } from '../../common/Utils/styles';
+import { Button } from '../../common';
+import { ScrollY } from '../../common';
 
 export const ProductPageWrapper = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import {
 } from './styles';
 import minussrc from './assets/minus-square.svg';
 import plussrc from './assets/plus-square.svg';
-import ImageCard from '../../common/ImageCard/ImageCard';
+import { ImageCard } from '../../common';
 import { AttributeButton } from '../AttributeButton';
 import { ProductAdvancedTitle } from '../ProductAdvancedTitle';
 import { Price } from '../Price';

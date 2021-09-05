@@ -11,7 +11,7 @@ interface Props {
   handleClick?: () => void;
 }
 
-export default class ImageCard extends React.Component<Props> {
+export class ImageCard extends React.Component<Props> {
   render() {
     const {
       src,

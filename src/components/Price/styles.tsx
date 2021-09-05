@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Title } from '../../common/RobotoCondensedTitle/styles';
-import { Truncate } from '../../common/Utils/styles';
+import { Title } from '../../common';
+import { Truncate } from '../../common';
 
 interface Props {
   size?: string;

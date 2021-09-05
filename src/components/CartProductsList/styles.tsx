@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ScrollBoth, ScrollY } from '../../common/Utils/styles';
+import { ScrollBoth, ScrollY } from '../../common';
 
 export const CartProductsListWrapper = styled.ul`
   display: flex;

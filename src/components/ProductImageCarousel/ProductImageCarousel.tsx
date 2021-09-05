@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageCard from '../../common/ImageCard/ImageCard';
+import { ImageCard } from '../../common';
 import { CartProductLeftArrow, CartProductRightArrow } from './style';
 import chevronsrc from './assets/chevron.svg';
 import { connector, PropsFromRedux } from '../../store';
@@ -36,6 +36,7 @@ class ProductImageCarousel extends React.Component<Props, State> {
         width='140px'
         height='100%'
         styleBody={{ position: 'relative' }}
+        styleImage={{ objectFit: 'contain' }}
         render={() => (
           <>
             <CartProductLeftArrow

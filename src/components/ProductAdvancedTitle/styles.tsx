@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Truncate } from '../../common/Utils/styles';
+import { Truncate } from '../../common';
 
 const baseSpan = styled.span`
   font-size: var(--fs-l);
