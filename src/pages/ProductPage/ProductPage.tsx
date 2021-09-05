@@ -22,6 +22,7 @@ import {
   Price,
 } from '../../components';
 import { nanoid } from 'nanoid';
+import { IAttribute, IAttributeSet, IProduct } from '../../shared';
 
 interface MatchProps {
   id: string;
@@ -50,7 +51,7 @@ class ProductPage extends React.Component<Props, State> {
   }
 
   findProductById = (id: string) => {
-    return this.props.fetchedProducts.find((prod) => prod.id === id);
+    return this.props.fetchedProducts.find((prod: IProduct) => prod.id === id);
   };
 
   handleImageSelection = (imageSrc: string) =>
@@ -80,7 +81,7 @@ class ProductPage extends React.Component<Props, State> {
       <section>
         <ProductPageWrapper>
           <ProductPageGallery>
-            {gallery.map((imgSrc) => {
+            {gallery.map((imgSrc: string) => {
               return (
                 <ImageCard
                   key={nanoid()}
@@ -115,7 +116,7 @@ class ProductPage extends React.Component<Props, State> {
             </ProductImageWrapper>
             <ProductPagePrimaryDetails>
               <ProductAdvancedTitle brand={brand} name={name} />
-              {attributes.map((set) => {
+              {attributes.map((set: IAttributeSet) => {
                 return (
                   <AttributeButtonsContainer key={nanoid()}>
                     <AttributeButtonsGroup
@@ -126,7 +127,7 @@ class ProductPage extends React.Component<Props, State> {
                       render={(handleSelection, selectedItemId) => {
                         return (
                           <>
-                            {set.items.map((item) => {
+                            {set.items.map((item: IAttribute) => {
                               return (
                                 <AttributeButton
                                   key={nanoid()}

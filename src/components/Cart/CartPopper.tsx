@@ -12,6 +12,7 @@ import {
   CartPopperTotalWrapper,
   Total,
 } from './styles';
+import { IProduct } from '../../shared';
 
 interface Props extends PropsFromRedux {}
 
@@ -32,7 +33,9 @@ class CartPopper extends React.Component<Props> {
     }
 
     for (let productId in mappedQuantities) {
-      const foundProduct = products.find((product) => product.id === productId);
+      const foundProduct = products.find(
+        (product: IProduct) => product.id === productId
+      );
 
       if (foundProduct) {
         for (let price of foundProduct.prices) {
