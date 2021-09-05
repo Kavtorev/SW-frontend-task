@@ -14,4 +14,5 @@ export type AttributeActionsType =
         productId: IProduct['id'];
         attrId: IAttributeSet['id'];
       };
-    };
+    }
+  | { type: 'REMOVE_ALL_ATTRIBUTE_SELECTIONS'; payload: IProduct['id'] };

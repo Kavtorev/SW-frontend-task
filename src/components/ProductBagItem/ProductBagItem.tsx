@@ -26,11 +26,13 @@ class ProductBagItem extends React.Component<Props> {
       productId,
       changeProductQuantity,
       removeProductFromCart,
+      removeAllAttributeSelections,
       cartProducts: { mappedQuantities },
     } = this.props;
 
     if (!(mappedQuantities[productId] - 1)) {
       removeProductFromCart(productId);
+      removeAllAttributeSelections(productId);
       return;
     }
 

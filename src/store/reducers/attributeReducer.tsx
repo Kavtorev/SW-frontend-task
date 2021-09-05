@@ -58,6 +58,17 @@ export const attributeReducer = (
       };
     }
 
+    case 'REMOVE_ALL_ATTRIBUTE_SELECTIONS': {
+      const productId = action.payload;
+
+      if (state.mappedAttributeSelections[productId]) {
+        const shallowCopiedState = { ...state };
+        delete shallowCopiedState.mappedAttributeSelections[productId];
+        return shallowCopiedState;
+      }
+      return state;
+    }
+
     default:
       return state;
   }

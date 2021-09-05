@@ -6,6 +6,7 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// not neccessary tbh
 export class Apollo extends React.Component {
   render() {
     return (

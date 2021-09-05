@@ -37,7 +37,7 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
     }
   }
 
-  preHandleSelection = () => {
+  handleSelection = () => {
     const { selectAttribute, unSelectAttribute, productId, attributeId } =
       this.props;
     if (this.state.selectedItemId) {
@@ -46,7 +46,7 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
     return selectAttribute;
   };
 
-  findSelectedItemId() {
+  findSelectedItemId = () => {
     const { attributeSelections, productId, attributeId } = this.props;
     if (productId in attributeSelections) {
       const attribute = attributeSelections[productId].find(
@@ -58,7 +58,7 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
       }
     }
     return '';
-  }
+  };
 
   render() {
     const { render, name = '', showName = true } = this.props;
@@ -66,7 +66,7 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
       <>
         {showName && <AttributeName>{`${name}:`}</AttributeName>}
         <AttributeButtonsGroupWrapper>
-          {render(this.preHandleSelection, this.state.selectedItemId)}
+          {render(this.handleSelection, this.state.selectedItemId)}
         </AttributeButtonsGroupWrapper>
       </>
     );

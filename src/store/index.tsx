@@ -8,7 +8,7 @@ import {
 } from './reducers';
 import { createLogger } from 'redux-logger';
 import { requestInitialData } from './actions';
-import { IProduct } from '../shared';
+import { IProduct, IAttributeSet, IAttribute } from '../shared';
 
 export const rootReducers = combineReducers({
   uiReducer,
@@ -64,7 +64,7 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     productId,
     quantity,
   }: {
-    productId: string;
+    productId: IProduct['id'];
     quantity: number;
   }) =>
     dispatch({
@@ -72,14 +72,21 @@ const mapDispatch = (dispatch: AppDispatch) => ({
       payload: { productId, quantity },
     }),
 
-  selectAttribute: (productId: string, attrId: string, itemId: string) =>
+  selectAttribute: (
+    productId: IProduct['id'],
+    attrId: IAttributeSet['id'],
+    itemId: IAttribute['id']
+  ) =>
     dispatch({
       type: 'SELECT_ATTRIBUTE',
       payload: { productId, meta: { attrId, itemId } },
     }),
 
-  unSelectAttribute: (productId: string, attrId: string) =>
+  unSelectAttribute: (productId: IProduct['id'], attrId: IAttributeSet['id']) =>
     dispatch({ type: 'UNSELECT_ATTRIBUTE', payload: { productId, attrId } }),
+
+  removeAllAttributeSelections: (productId: IProduct['id']) =>
+    dispatch({ type: 'REMOVE_ALL_ATTRIBUTE_SELECTIONS', payload: productId }),
 });
 
 export const connector = connect(mapState, mapDispatch);
