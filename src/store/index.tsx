@@ -17,7 +17,7 @@ export const rootReducers = combineReducers({
   attributeReducer,
 });
 const logger = createLogger();
-export const store = createStore(rootReducers, applyMiddleware(logger));
+export const store = createStore(rootReducers, applyMiddleware());
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
