@@ -13,7 +13,7 @@ class Cart extends React.Component<Props> {
     } = this.props;
 
     return (
-      <CartButton onClick={() => closeOrOpenCartPopper()}>
+      <CartButton onClick={closeOrOpenCartPopper}>
         <img src={cartsrc} alt='Shopping Cart' />
         <ItemsHolder>{totalQuantity}</ItemsHolder>
       </CartButton>

@@ -13,6 +13,7 @@ import {
   Total,
 } from './styles';
 import { IProduct } from '../../shared';
+import ClickAwayListener from 'react-click-away-listener';
 
 interface Props extends PropsFromRedux {}
 
@@ -58,54 +59,57 @@ class CartPopper extends React.Component<Props> {
   render() {
     const {
       cartProducts: { totalQuantity },
+      closeOrOpenCartPopper,
     } = this.props;
 
     return (
-      <CartPopperContainer>
-        <CartPopperHeader>
-          My Bag,{' '}
-          <ItemsQuantity>{`${totalQuantity} ${this.getQuantityText(
-            totalQuantity
-          )}`}</ItemsQuantity>
-        </CartPopperHeader>
-        <CartProductsList />
-        <CartPopperTotalWrapper>
-          <Total>Total</Total>
-          <Price
-            prices={this.getTotalPrice()}
-            showTitle={false}
-            style={{
-              fontWeight: 700,
-              lineHeight: 1.125,
-              fontSize: '1rem',
-              maxWidth: '200px',
-            }}
-          />
-        </CartPopperTotalWrapper>
-        <CartPopperFooter>
-          <Link
-            to='/cart'
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textTransform: 'uppercase',
-              fontSize: 'var(--fs-xs)',
-              border: '1px solid var(--c-black)',
-              width: '140px',
-              height: '43px',
-              cursor: 'pointer',
-              fontWeight: 600,
-              backgroundColor: 'transparent',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-          >
-            View Bag
-          </Link>
-          <CheckOutButton>Check out</CheckOutButton>
-        </CartPopperFooter>
-      </CartPopperContainer>
+      <ClickAwayListener onClickAway={closeOrOpenCartPopper}>
+        <CartPopperContainer>
+          <CartPopperHeader>
+            My Bag,{' '}
+            <ItemsQuantity>{`${totalQuantity} ${this.getQuantityText(
+              totalQuantity
+            )}`}</ItemsQuantity>
+          </CartPopperHeader>
+          <CartProductsList />
+          <CartPopperTotalWrapper>
+            <Total>Total</Total>
+            <Price
+              prices={this.getTotalPrice()}
+              showTitle={false}
+              style={{
+                fontWeight: 700,
+                lineHeight: 1.125,
+                fontSize: '1rem',
+                maxWidth: '200px',
+              }}
+            />
+          </CartPopperTotalWrapper>
+          <CartPopperFooter>
+            <Link
+              to='/cart'
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                textTransform: 'uppercase',
+                fontSize: 'var(--fs-xs)',
+                border: '1px solid var(--c-black)',
+                width: '140px',
+                height: '43px',
+                cursor: 'pointer',
+                fontWeight: 600,
+                backgroundColor: 'transparent',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              View Bag
+            </Link>
+            <CheckOutButton>Check out</CheckOutButton>
+          </CartPopperFooter>
+        </CartPopperContainer>
+      </ClickAwayListener>
     );
   }
 }

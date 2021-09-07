@@ -20,7 +20,7 @@ class CurrencySwitcher extends React.Component<Props> {
       selectedCurrency,
       selectCurrency,
       currencies,
-      closeOrOpenCurrencyMenu,
+      toggleCurrencyMenu,
       isCurrencyMenuOpen,
     } = this.props;
 
@@ -31,7 +31,7 @@ class CurrencySwitcher extends React.Component<Props> {
           key={nanoid()}
           onClick={() => {
             selectCurrency(name);
-            closeOrOpenCurrencyMenu();
+            toggleCurrencyMenu();
           }}
         >
           {`${icon} ${name}`}
@@ -42,14 +42,16 @@ class CurrencySwitcher extends React.Component<Props> {
     return (
       <CurrencyMenuContainer>
         <CurrencyMenuButton
-          onClick={() => closeOrOpenCurrencyMenu()}
           isMenuOpened={isCurrencyMenuOpen}
+          onClick={() => {
+            if (!this.props.isCurrencyMenuOpen) toggleCurrencyMenu();
+          }}
         >
           {currencyMapper[selectedCurrency] || '#'}{' '}
           <img src={chevronsrc} alt='' />
         </CurrencyMenuButton>
         {isCurrencyMenuOpen && (
-          <ClickAwayListener onClickAway={closeOrOpenCurrencyMenu}>
+          <ClickAwayListener onClickAway={toggleCurrencyMenu}>
             <CurrencyMenuOptionsWrapper>
               <CurrencyMenuOptions>{renderedCurrencies}</CurrencyMenuOptions>
             </CurrencyMenuOptionsWrapper>
