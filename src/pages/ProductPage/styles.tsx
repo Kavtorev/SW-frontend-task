@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from '../../common';
-import { ScrollY } from '../../common';
+import { ScrollY, ScrollYAuto } from '../../common';
 
 export const ProductPageWrapper = styled.div`
   display: flex;
@@ -32,11 +32,11 @@ export const CartButton = styled(Button)`
 `;
 
 export const ProductDescription = styled.div`
-  height: 103px;
+  height: 200px;
   font-family: var(--roboto-ff);
   font-weight: var(--fw-normal);
   line-height: 1.625;
-  ${ScrollY}
+  ${ScrollYAuto}
 
   & > * {
     font-family: var(--roboto-ff);
