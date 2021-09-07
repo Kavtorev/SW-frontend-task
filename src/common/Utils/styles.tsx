@@ -34,6 +34,10 @@ export const ScrollBoth = css`
   }
 `;
 
+export const ScrollAutoBoth = css`
+  overflow: auto;
+`;
+
 export const Truncate = css`
   overflow: hidden;
   text-overflow: ellipsis;

@@ -15,6 +15,7 @@ interface Props extends PropsFromRedux {
   showName?: boolean;
   productId: string;
   attributeId: string;
+  nameSize?: string;
 }
 
 class AttributeButtonsGroup extends React.Component<Props, State> {
@@ -61,10 +62,17 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
   };
 
   render() {
-    const { render, name = '', showName = true } = this.props;
+    const {
+      render,
+      name = '',
+      showName = true,
+      nameSize = 'normal',
+    } = this.props;
     return (
       <>
-        {showName && <AttributeName>{`${name}:`}</AttributeName>}
+        {showName && (
+          <AttributeName nameSize={nameSize}>{`${name}:`}</AttributeName>
+        )}
         <AttributeButtonsGroupWrapper>
           {render(this.handleSelection, this.state.selectedItemId)}
         </AttributeButtonsGroupWrapper>

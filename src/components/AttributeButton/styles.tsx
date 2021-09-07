@@ -6,6 +6,7 @@ export interface StyledProps {
   size?: 'small' | 'normal';
   attributeType?: IAttributeSet['type'];
   value: IAttribute['value'];
+  disabled?: boolean;
 }
 
 const getColor = ({ selected, size, attributeType, value }: StyledProps) => {
@@ -83,4 +84,5 @@ export const StyledAttributeButton = styled(Button)<StyledProps>`
   background-color: ${(props) => getColor(props).backgroundColor};
   border: ${(props) => getColor(props).border};
   padding: 0.5em;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
