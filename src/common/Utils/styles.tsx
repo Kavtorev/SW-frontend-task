@@ -1,13 +1,18 @@
 import { css } from 'styled-components';
 
 export const ScrollY = css`
+  overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
-  overflow-x: hidden;
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const ScrollYAuto = css`
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const ScrollX = css`

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ScrollY } from '../../common';
+import { ScrollYAuto } from '../../common';
 
 export const CurrencyMenuContainer = styled.div`
   position: relative;
@@ -31,7 +31,7 @@ export const CurrencyMenuOptionsWrapper = styled.div`
   height: 170px;
   background-color: #ffffff;
   box-shadow: 0px 4px 35px 0px #a8acb030;
-  ${ScrollY};
+  ${ScrollYAuto};
 `;
 
 export const CurrencyMenuOptions = styled.ul`
