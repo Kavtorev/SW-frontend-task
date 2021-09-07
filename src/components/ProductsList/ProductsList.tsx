@@ -34,19 +34,6 @@ class ProductsList extends React.Component<Props> {
       );
     });
 
-    if (renderedProducts.length % 3 !== 0)
-      renderedProducts.push(
-        <li
-          key={nanoid()}
-          style={{
-            width: '386px',
-            height: '444px',
-            backgroundColor: 'transparent',
-            listStyle: 'none',
-          }}
-        />
-      );
-
     return <ProductsListContainer>{renderedProducts}</ProductsListContainer>;
   }
 }
