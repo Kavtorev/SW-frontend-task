@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductCardContainer, ProductName, CartButton } from './styles';
+import { ProductCardContainer, ProductFullName, CartButton } from './styles';
 import { OutOfStockHolder } from '../OutOfStockHolder';
 import iconsrc from './assets/Circle Icon.svg';
 import { ImageCard } from '../../common';
@@ -14,7 +14,7 @@ interface Props {
 
 export class ProductCard extends React.Component<Props> {
   render() {
-    const { prices, name, gallery, inStock, id } = this.props.product;
+    const { prices, name, gallery, inStock, brand, id } = this.props.product;
     const { handleOnClick } = this.props;
 
     return (
@@ -55,7 +55,7 @@ export class ProductCard extends React.Component<Props> {
             );
           }}
         />
-        <ProductName>{name}</ProductName>
+        <ProductFullName>{`${brand} ${name}`}</ProductFullName>
         <Price prices={prices} size='normal' showTitle={false} />
       </ProductCardContainer>
     );

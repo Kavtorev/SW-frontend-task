@@ -29,7 +29,7 @@ export const ProductCardContainer = styled.li<Props>`
   }
 `;
 
-export const ProductName = styled.p`
+export const ProductFullName = styled.p`
   font-weight: var(--fw-light);
   margin-top: 1.5em;
   font-size: var(--fs-s);
