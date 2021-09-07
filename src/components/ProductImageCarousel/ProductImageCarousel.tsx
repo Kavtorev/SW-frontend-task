@@ -39,14 +39,20 @@ class ProductImageCarousel extends React.Component<Props, State> {
         styleImage={{ objectFit: 'contain' }}
         render={() => (
           <>
-            <CartProductLeftArrow
-              src={chevronsrc}
-              onClick={() => this.handleStepClick(-1)}
-            />
-            <CartProductRightArrow
-              src={chevronsrc}
-              onClick={() => this.handleStepClick(1)}
-            />
+            {this.props.gallery.length > 1 ? (
+              <>
+                <CartProductLeftArrow
+                  src={chevronsrc}
+                  onClick={() => this.handleStepClick(-1)}
+                />
+                <CartProductRightArrow
+                  src={chevronsrc}
+                  onClick={() => this.handleStepClick(1)}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </>
         )}
       />
