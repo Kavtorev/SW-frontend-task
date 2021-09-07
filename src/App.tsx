@@ -35,7 +35,7 @@ class App extends React.Component<Props> {
             <Route path='/cart' component={CartPage} />
             <Route path='/:category' exact component={CategoryPage} />
             <Route path='/details/:id' component={ProductPage} />
-            <Redirect to='/all' />
+            <Redirect push={true} to='/all' />
           </Switch>
         </StyledContainer>
       </>

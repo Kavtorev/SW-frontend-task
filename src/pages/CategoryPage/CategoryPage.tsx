@@ -13,27 +13,41 @@ interface Props extends PropsFromRedux, RouteComponentProps<MatchParams> {}
 
 class CategoryPage extends React.Component<Props> {
   componentDidMount() {
-    const { selectCategory } = this.props;
-    const category = this.findCategoryByMatch();
-    selectCategory(category?.name || 'all');
+    const { fetchProductsByCategoryName } = this.props;
+    const categoryName = this.findCategoryNameByParamMatch();
+    fetchProductsByCategoryName(categoryName);
+    console.log(this.findCategoryNameByParamMatch());
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { match, selectCategory } = this.props;
-    if (prevProps.match.params.category !== match.params.category) {
-      const category = this.findCategoryByMatch();
-      selectCategory(category?.name || 'all');
+    if (prevProps.selectedCategory !== this.props.selectedCategory) {
+      const { fetchProductsByCategoryName } = this.props;
+      const categoryName = this.findCategoryNameByParamMatch();
+      fetchProductsByCategoryName(categoryName);
+      console.log(this.findCategoryNameByParamMatch());
     }
   }
 
-  findCategoryByMatch = () => {
+  findCategoryNameByParamMatch = () => {
     const { categories, match } = this.props;
-    return categories.find((cat) => cat.name === match.params.category);
+
+    const foundCategory = categories.find(
+      (cat) => cat.name === match.params.category
+    );
+
+    if (!foundCategory || foundCategory.name === 'all') {
+      return '';
+    }
+
+    return foundCategory.name;
   };
 
   render() {
-    const { selectedCategory } = this.props;
+    const { selectedCategory, categoryProductsDataLoading } = this.props;
 
+    if (categoryProductsDataLoading) {
+      return <h1>Please wait products are loading...</h1>;
+    }
     return (
       <section>
         <CategoryPageTitle>

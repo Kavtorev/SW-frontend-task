@@ -6,7 +6,10 @@ type InitialDataStateType = {
   currencies: string[];
   products: IProduct[];
   error: string;
-  isPending: boolean;
+  isInitialDataPending: boolean;
+  selectedCurrency: string;
+  selectedCategory: string;
+  isCategoryProductsDataLoading: boolean;
 };
 
 const initialDataState: InitialDataStateType = {
@@ -14,27 +17,48 @@ const initialDataState: InitialDataStateType = {
   currencies: [],
   products: [],
   error: '',
-  isPending: true,
+  isInitialDataPending: false,
+  isCategoryProductsDataLoading: false,
+  selectedCurrency: 'USD',
+  selectedCategory: 'all',
 };
 
-export const requestInitialDataReducer = (
+export const requestRemoteDataReducer = (
   state: InitialDataStateType = initialDataState,
   action: RemoteActionsType
 ) => {
   switch (action.type) {
     case 'REQUEST_INITIAL_DATA_ERROR':
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, isInitialDataPending: false };
     case 'REQUEST_INITIAL_DATA_PENDING':
-      return { ...state };
+      return { ...state, isInitialDataPending: true };
     case 'REQUEST_INITIAL_DATA_SUCCESS':
-      const { categories, products, currencies } = action.payload;
+      const { categories, currencies } = action.payload;
       return {
         ...state,
         categories: [...state.categories, ...categories],
-        products,
         currencies,
-        isPending: false,
+        isInitialDataPending: false,
       };
+    case 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_ERROR':
+      return {
+        ...state,
+        error: action.payload,
+        isCategoryProductsDataLoading: false,
+      };
+    case 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_PENDING':
+      return { ...state, isCategoryProductsDataLoading: true };
+    case 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_SUCCESS':
+      const { products } = action.payload;
+      return {
+        ...state,
+        products,
+        isCategoryProductsDataLoading: false,
+      };
+    case 'SELECT_CURRENCY':
+      return { ...state, selectedCurrency: action.payload };
+    case 'SELECT_CATEGORY':
+      return { ...state, selectedCategory: action.payload };
     default:
       return state;
   }

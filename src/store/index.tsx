@@ -2,21 +2,21 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import {
   uiReducer,
-  requestInitialDataReducer,
+  requestRemoteDataReducer,
   cartRedcucer,
   attributeReducer,
 } from './reducers';
 import { createLogger } from 'redux-logger';
-import { requestInitialData } from './actions';
-import { IProduct, IAttributeSet, IAttribute } from '../shared';
+import { requestInitialData, requestProductsByCategoryName } from './actions';
+import { IProduct, IAttributeSet, IAttribute, ICategory } from '../shared';
 
 export const rootReducers = combineReducers({
   uiReducer,
-  requestInitialDataReducer,
+  requestRemoteDataReducer,
   cartRedcucer,
   attributeReducer,
 });
-const logger = createLogger();
+// const logger = createLogger();
 export const store = createStore(rootReducers, applyMiddleware());
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -25,18 +25,20 @@ export type AppDispatch = typeof store.dispatch;
 const mapState = (state: RootState) => ({
   isCartPopperOpen: state.uiReducer.isCartPopperOpen,
   isCurrencyMenuOpen: state.uiReducer.isCurrencyMenuOpen,
-  selectedCurrency: state.uiReducer.selectedCurrency,
-  selectedCategory: state.uiReducer.selectedCategory,
-  categories: state.requestInitialDataReducer.categories,
-  currencies: state.requestInitialDataReducer.currencies,
-  initialDataLoading: state.requestInitialDataReducer.isPending,
-  initialDataError: state.requestInitialDataReducer.error,
+  selectedCurrency: state.requestRemoteDataReducer.selectedCurrency,
+  selectedCategory: state.requestRemoteDataReducer.selectedCategory,
+  categories: state.requestRemoteDataReducer.categories,
+  currencies: state.requestRemoteDataReducer.currencies,
+  initialDataLoading: state.requestRemoteDataReducer.isInitialDataPending,
+  categoryProductsDataLoading:
+    state.requestRemoteDataReducer.isCategoryProductsDataLoading,
+  initialDataError: state.requestRemoteDataReducer.error,
   cartProducts: {
     products: state.cartRedcucer.products,
     mappedQuantities: state.cartRedcucer.mappedQuantities,
     totalQuantity: state.cartRedcucer.total,
   },
-  fetchedProducts: state.requestInitialDataReducer.products,
+  fetchedProducts: state.requestRemoteDataReducer.products,
   attributeSelections: state.attributeReducer.mappedAttributeSelections,
 });
 
@@ -53,6 +55,9 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     dispatch({ type: 'SELECT_CATEGORY', payload }),
 
   fetchInitialData: () => requestInitialData(dispatch),
+
+  fetchProductsByCategoryName: (categoryName: ICategory['name']) =>
+    requestProductsByCategoryName(dispatch, categoryName),
 
   addProductToCart: (product: IProduct) =>
     dispatch({ type: 'ADD_PRODUCT_TO_CART', payload: product }),
