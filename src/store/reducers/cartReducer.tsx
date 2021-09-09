@@ -2,54 +2,61 @@ import { IProduct } from '../../shared';
 import { CartActionsType } from '../actions';
 
 type InitialCartStateType = {
-  products: IProduct[];
-  mappedQuantities: { [productId: string]: number };
+  products: { [composedId: string]: IProduct };
+  mappedQuantities: { [composedId: string]: number };
   total: number;
 };
 
 const initialDataState: InitialCartStateType = {
-  products: [],
+  products: {},
   mappedQuantities: {},
   total: 0,
 };
 
-export const cartRedcucer = (
+export const cartReducer = (
   state: InitialCartStateType = initialDataState,
   action: CartActionsType
 ) => {
   switch (action.type) {
-    case 'ADD_PRODUCT_TO_CART':
-      if (action.payload.id in state.mappedQuantities) return state;
+    case 'ADD_PRODUCT_TO_CART': {
+      const { composedId, product, quantity } = action.payload;
+      if (composedId in state.mappedQuantities) return state;
       return {
         ...state,
-        products: state.products.concat(action.payload),
+        products: { ...state.products, [composedId]: product },
         mappedQuantities: {
           ...state.mappedQuantities,
-          [action.payload.id]: 1,
-        },
-        total: state.total + 1,
-      };
-    case 'REMOVE_PRODUCT_FROM_CART':
-      const mappedQuantities = { ...state.mappedQuantities };
-      delete mappedQuantities[action.payload];
-      return {
-        ...state,
-        products: state.products
-          .concat([])
-          .filter((product) => product.id !== action.payload),
-        total: state.total - 1,
-        mappedQuantities,
-      };
-    case 'CHANGE_PRODUCT_QUANTITY':
-      const { productId, quantity } = action.payload;
-      return {
-        ...state,
-        mappedQuantities: {
-          ...state.mappedQuantities,
-          [productId]: state.mappedQuantities[productId] + quantity,
+          [composedId]: quantity,
         },
         total: state.total + quantity,
       };
+    }
+    case 'REMOVE_PRODUCT_FROM_CART': {
+      const mappedQuantities = { ...state.mappedQuantities };
+      const productQuantity = mappedQuantities[action.payload];
+      delete mappedQuantities[action.payload];
+
+      const products = { ...state.products };
+      delete products[action.payload];
+
+      return {
+        ...state,
+        products,
+        total: state.total - productQuantity,
+        mappedQuantities,
+      };
+    }
+    case 'CHANGE_PRODUCT_QUANTITY': {
+      const { composedId, quantity } = action.payload;
+      return {
+        ...state,
+        mappedQuantities: {
+          ...state.mappedQuantities,
+          [composedId]: state.mappedQuantities[composedId] + quantity,
+        },
+        total: state.total + quantity,
+      };
+    }
     default:
       return state;
   }
