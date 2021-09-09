@@ -29,19 +29,15 @@ class CartPopper extends React.Component<Props> {
     } = this.props;
     const hashMap: { [currency: string]: number } = {};
 
-    for (let curr of currencies) {
-      hashMap[curr] = 0;
-    }
+    for (let curr of currencies) hashMap[curr] = 0;
 
-    for (let productId in mappedQuantities) {
-      const foundProduct = products.find(
-        (product: IProduct) => product.id === productId
-      );
+    for (let composedId in mappedQuantities) {
+      const foundProduct = products[composedId] || '';
 
       if (foundProduct) {
         for (let price of foundProduct.prices) {
           hashMap[price.currency] += +(
-            price.amount * mappedQuantities[productId]
+            price.amount * mappedQuantities[composedId]
           ).toFixed(2);
         }
       }

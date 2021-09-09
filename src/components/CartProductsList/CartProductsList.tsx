@@ -19,18 +19,19 @@ interface Props extends PropsFromRedux {}
 class CartProductsList extends React.Component<Props> {
   render() {
     const {
-      cartProducts: { products, mappedQuantities },
+      cartProducts: { products },
     } = this.props;
     return (
       <CartProductsListWrapper>
-        {products.map(({ brand, name, id, gallery, prices, attributes }) => {
+        {Object.keys(products).map((composedId) => {
+          const { brand, name, gallery, prices, id, attributes } =
+            products[composedId];
           return (
             <ProductBagItem
               key={nanoid()}
-              productId={id}
+              composedId={composedId}
               increaseSrc={plussrc}
               decreaseSrc={minussrc}
-              quantity={mappedQuantities[id]}
               productMetaStyles={{ maxWidth: '140px' }}
               rightRender={
                 <ImageCard
@@ -48,19 +49,19 @@ class CartProductsList extends React.Component<Props> {
                     brandStyle={{ fontWeight: 300, fontSize: '1rem' }}
                     nameStyle={{ fontWeight: 300, fontSize: '1rem' }}
                   />
-                  <Price
-                    prices={prices}
-                    showTitle={false}
-                    size='small'
-                    multiplyBy={mappedQuantities[id]}
-                  />
+                  <Price prices={prices} showTitle={false} size='small' />
                   <AttributeButtonsGroupWrapper>
                     {attributes.map((set) => {
                       return (
                         <AttributeButtonsGroup
                           key={nanoid()}
-                          showName={false}
-                          productId={id}
+                          showName={
+                            set.items[0].id === 'No' ||
+                            set.items[0].id === 'Yes'
+                          }
+                          name={set.name}
+                          nameSize='small'
+                          composedId={composedId}
                           attributeId={set.id}
                           render={(handleSelection, selectedItemId) => {
                             return (
@@ -71,10 +72,11 @@ class CartProductsList extends React.Component<Props> {
                                       key={nanoid()}
                                       attributeType={set.type}
                                       value={item.value}
+                                      disabled={true}
                                       size='small'
                                       selected={selectedItemId === item.id}
                                       handleClick={() =>
-                                        handleSelection()(id, set.id, item.id)
+                                        handleSelection(item.id)
                                       }
                                     >
                                       {item.displayValue}

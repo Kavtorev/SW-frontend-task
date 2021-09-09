@@ -16,35 +16,35 @@ interface Props extends PropsFromRedux {}
 class BagProductsList extends React.Component<Props> {
   render() {
     const {
-      cartProducts: { products, mappedQuantities },
+      cartProducts: { products },
     } = this.props;
     return (
       <BagProductsListWrapper>
-        {products.map(({ id, gallery, brand, name, prices, attributes }) => {
+        {Object.keys(products).map((composedId) => {
+          const { id, gallery, brand, name, prices, attributes } =
+            products[composedId];
           return (
             <ProductBagItem
               key={nanoid()}
-              productId={id}
+              composedId={composedId}
               increaseSrc={plussrc}
               decreaseSrc={minussrc}
-              quantity={mappedQuantities[id]}
               rightRender={<ProductImageCarousel gallery={gallery} />}
               productMeta={
                 <>
                   <ProductAdvancedTitle brand={brand} name={name} />
-                  <Price
-                    prices={prices}
-                    showTitle={false}
-                    size='large'
-                    multiplyBy={mappedQuantities[id]}
-                  />
+                  <Price prices={prices} showTitle={false} size='large' />
 
                   {attributes.map((set) => {
                     return (
                       <AttributeButtonsContainer key={nanoid()}>
                         <AttributeButtonsGroup
-                          showName={false}
-                          productId={id}
+                          showName={
+                            set.items[0].id === 'No' ||
+                            set.items[0].id === 'Yes'
+                          }
+                          name={set.name}
+                          composedId={composedId}
                           attributeId={set.id}
                           render={(handleSelection, selectedItemId) => {
                             return (
@@ -57,7 +57,7 @@ class BagProductsList extends React.Component<Props> {
                                       value={item.value}
                                       selected={selectedItemId === item.id}
                                       handleClick={() =>
-                                        handleSelection()(id, set.id, item.id)
+                                        handleSelection(item.id)
                                       }
                                     >
                                       {item.displayValue}
