@@ -31,6 +31,26 @@ export const cartReducer = (
         total: state.total + quantity,
       };
     }
+
+    case 'ADD_PRODUCT_TO_CART_AT_INDEX': {
+      const { composedId, index, product, quantity } = action.payload;
+      if (composedId in state.mappedQuantities) return state;
+
+      const enumerable = Object.entries(state.products);
+      enumerable.splice(index, 0, [composedId, product]);
+      const products = Object.fromEntries(enumerable);
+
+      return {
+        ...state,
+        products: { ...products },
+        mappedQuantities: {
+          ...state.mappedQuantities,
+          [composedId]: quantity,
+        },
+        total: state.total + quantity,
+      };
+    }
+
     case 'REMOVE_PRODUCT_FROM_CART': {
       const mappedQuantities = { ...state.mappedQuantities };
       const productQuantity = mappedQuantities[action.payload];

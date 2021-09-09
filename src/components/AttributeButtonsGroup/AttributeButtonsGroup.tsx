@@ -25,12 +25,13 @@ class AttributeButtonsGroup extends React.Component<Props> {
   handleReaddProductToCart = (
     newComposedId: string,
     product: IProduct,
-    quantity: number
+    quantity: number,
+    index: number
   ) => {
     // re-adding attributes in order to match the latest generated composedId.
     const { composedId } = this.props;
     this.props.removeProductFromCart(composedId);
-    this.props.addProductToCart(newComposedId, product, quantity);
+    this.props.addProductToCartAtIndex(newComposedId, product, quantity, index);
   };
 
   handleReselectAttributes = (
@@ -63,6 +64,10 @@ class AttributeButtonsGroup extends React.Component<Props> {
       .concat([{ attrId: attributeId, itemId }]);
 
     const product = cartProducts.products[composedId];
+    const productIndexInCart = Object.keys(cartProducts.products).findIndex(
+      (compId) => compId === composedId
+    );
+
     const newComposedId = generateComposedId(product, selection);
 
     if (composedId !== newComposedId) {
@@ -73,7 +78,12 @@ class AttributeButtonsGroup extends React.Component<Props> {
       }
 
       this.handleReselectAttributes(newComposedId, selection);
-      this.handleReaddProductToCart(newComposedId, product, productQuantity);
+      this.handleReaddProductToCart(
+        newComposedId,
+        product,
+        productQuantity,
+        productIndexInCart
+      );
     }
   };
 

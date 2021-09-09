@@ -73,6 +73,17 @@ const mapDispatch = (dispatch: AppDispatch) => ({
       payload: { composedId, product, quantity },
     }),
 
+  addProductToCartAtIndex: (
+    composedId: string,
+    product: IProduct,
+    quantity: number,
+    index: number
+  ) =>
+    dispatch({
+      type: 'ADD_PRODUCT_TO_CART_AT_INDEX',
+      payload: { composedId, product, quantity, index },
+    }),
+
   removeProductFromCart: (composedId: string) =>
     dispatch({ type: 'REMOVE_PRODUCT_FROM_CART', payload: composedId }),
 
