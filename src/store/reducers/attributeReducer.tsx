@@ -1,19 +1,21 @@
-import { IAttribute, IAttributeSet, IProduct } from '../../shared';
+import { IProduct, IAttributeMeta } from '../../shared';
 import { AttributeActionsType } from '../actions';
 
-interface IAttributeMeta {
-  attrId: IAttributeSet['id'];
-  itemId: IAttribute['id'];
-}
-
 type InitialAtrributeStateType = {
-  mappedAttributeSelections: {
+  // product that is about to happen in a shopping cart...
+  localProductAttributeSelections: {
     [productId: IProduct['id']]: Array<IAttributeMeta>;
+  };
+
+  // composed product id like: <product_id>_<attribute1_id>_<item1_id>_<attribute2_id>_<item2_id>...
+  cartProductAttributeSelections: {
+    [composedId: string]: Array<IAttributeMeta>;
   };
 };
 
 const initialAtrributeState: InitialAtrributeStateType = {
-  mappedAttributeSelections: {},
+  localProductAttributeSelections: {},
+  cartProductAttributeSelections: {},
 };
 
 export const attributeReducer = (
@@ -21,14 +23,14 @@ export const attributeReducer = (
   action: AttributeActionsType
 ) => {
   switch (action.type) {
-    case 'SELECT_ATTRIBUTE':
+    case 'SELECT_LOCAL': {
       const { productId, meta } = action.payload;
 
-      if (!state.mappedAttributeSelections[productId]) {
+      if (!state.localProductAttributeSelections[productId]) {
         return {
           ...state,
-          mappedAttributeSelections: {
-            ...state.mappedAttributeSelections,
+          localProductAttributeSelections: {
+            ...state.localProductAttributeSelections,
             [productId]: [{ attrId: meta.attrId, itemId: meta.itemId }],
           },
         };
@@ -36,34 +38,45 @@ export const attributeReducer = (
 
       return {
         ...state,
-        mappedAttributeSelections: {
-          ...state.mappedAttributeSelections,
+        localProductAttributeSelections: {
+          ...state.localProductAttributeSelections,
           [productId]: [
-            ...state.mappedAttributeSelections[productId],
+            ...state.localProductAttributeSelections[productId],
             { attrId: meta.attrId, itemId: meta.itemId },
           ],
         },
       };
+    }
 
-    case 'UNSELECT_ATTRIBUTE': {
+    case 'UNSELECT_LOCAL': {
       const { attrId, productId } = action.payload;
       return {
         ...state,
-        mappedAttributeSelections: {
-          ...state.mappedAttributeSelections,
-          [productId]: state.mappedAttributeSelections[productId].filter(
+        localProductAttributeSelections: {
+          ...state.localProductAttributeSelections,
+          [productId]: state.localProductAttributeSelections[productId].filter(
             (attr) => attr.attrId !== attrId
           ),
         },
       };
     }
 
-    case 'REMOVE_ALL_ATTRIBUTE_SELECTIONS': {
-      const productId = action.payload;
+    case 'SET_SELECTED_ATTRIBUTES': {
+      const { composedId, selectedAttributes } = action.payload;
+      return {
+        ...state,
+        cartProductAttributeSelections: {
+          ...state.cartProductAttributeSelections,
+          [composedId]: selectedAttributes,
+        },
+      };
+    }
 
-      if (state.mappedAttributeSelections[productId]) {
+    case 'REMOVE_ALL_ATTRIBUTE_SELECTIONS': {
+      const composedId = action.payload;
+      if (state.cartProductAttributeSelections[composedId]) {
         const shallowCopiedState = { ...state };
-        delete shallowCopiedState.mappedAttributeSelections[productId];
+        delete shallowCopiedState.cartProductAttributeSelections[composedId];
         return shallowCopiedState;
       }
       return state;
