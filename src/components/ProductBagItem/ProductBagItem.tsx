@@ -16,32 +16,28 @@ interface Props extends PropsFromRedux {
   rightRender: React.ReactElement;
   productMeta: React.ReactElement;
   productMetaStyles?: React.CSSProperties;
-  quantity?: number;
-  productId: string;
+  composedId: string;
 }
 
 class ProductBagItem extends React.Component<Props> {
   handleDecreaseClick = () => {
     const {
-      productId,
-      changeProductQuantity,
-      removeProductFromCart,
-      removeAllAttributeSelections,
+      composedId,
       cartProducts: { mappedQuantities },
     } = this.props;
 
-    if (!(mappedQuantities[productId] - 1)) {
-      removeProductFromCart(productId);
-      removeAllAttributeSelections(productId);
+    if (!(mappedQuantities[composedId] - 1)) {
+      this.props.removeProductFromCart(composedId);
+      this.props.removeAllAttributeSelections(composedId);
       return;
     }
 
-    changeProductQuantity({ productId, quantity: -1 });
+    this.props.changeProductQuantity(composedId, -1);
   };
 
   handleIncreaseClick = () => {
-    const { productId, changeProductQuantity } = this.props;
-    changeProductQuantity({ productId, quantity: 1 });
+    const { composedId } = this.props;
+    this.props.changeProductQuantity(composedId, 1);
   };
 
   render() {
@@ -50,8 +46,9 @@ class ProductBagItem extends React.Component<Props> {
       decreaseSrc,
       rightRender,
       productMeta,
-      quantity,
       productMetaStyles,
+      cartProducts: { mappedQuantities },
+      composedId,
     } = this.props;
     return (
       <ProductBagItemWrapper>
@@ -63,7 +60,9 @@ class ProductBagItem extends React.Component<Props> {
             <ProductBagItemIncreaseButton onClick={this.handleIncreaseClick}>
               <img src={increaseSrc} alt='' />
             </ProductBagItemIncreaseButton>
-            <ProductBagItemQuantity>{quantity}</ProductBagItemQuantity>
+            <ProductBagItemQuantity>
+              {mappedQuantities[composedId]}
+            </ProductBagItemQuantity>
             <ProductBagItemDecreaseButton onClick={this.handleDecreaseClick}>
               <img src={decreaseSrc} alt='' />
             </ProductBagItemDecreaseButton>
