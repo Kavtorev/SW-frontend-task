@@ -1,63 +1,94 @@
 import React from 'react';
+import {
+  IAttributeSet,
+  IAttribute,
+  IProduct,
+  IAttributeMeta,
+} from '../../shared';
+import { generateComposedId } from '../../shared/function';
 import { connector, PropsFromRedux } from '../../store';
 import { AttributeButtonsGroupWrapper, AttributeName } from './styles';
 
-interface State {
-  selectedItemId: string;
-}
-
 interface Props extends PropsFromRedux {
-  name?: string;
   render: (
-    handleSelection: () => PropsFromRedux['selectAttribute'],
-    selectedItemId: State['selectedItemId']
+    handleSelection: (itemId: IAttribute['id']) => void,
+    selectedItemId: IAttribute['id']
   ) => React.ReactElement;
+  name?: string;
   showName?: boolean;
-  productId: string;
-  attributeId: string;
+  composedId: string;
+  attributeId: IAttributeSet['id'];
   nameSize?: string;
 }
 
-class AttributeButtonsGroup extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      selectedItemId: '',
-    };
-  }
-
-  componentDidMount() {
-    this.setState({ selectedItemId: this.findSelectedItemId() });
-  }
-
-  componentDidUpdate() {
-    const selectedItemId = this.findSelectedItemId();
-    if (selectedItemId !== this.state.selectedItemId) {
-      this.setState({ selectedItemId });
-    }
-  }
-
-  handleSelection = () => {
-    const { selectAttribute, unSelectAttribute, productId, attributeId } =
-      this.props;
-    if (this.state.selectedItemId) {
-      unSelectAttribute(productId, attributeId);
-    }
-    return selectAttribute;
+class AttributeButtonsGroup extends React.Component<Props> {
+  handleReaddProductToCart = (
+    newComposedId: string,
+    product: IProduct,
+    quantity: number
+  ) => {
+    // re-adding attributes in order to match the latest generated composedId.
+    const { composedId } = this.props;
+    this.props.removeProductFromCart(composedId);
+    this.props.addProductToCart(newComposedId, product, quantity);
   };
 
-  findSelectedItemId = () => {
-    const { attributeSelections, productId, attributeId } = this.props;
-    if (productId in attributeSelections) {
-      const attribute = attributeSelections[productId].find(
-        (attr) => attr.attrId === attributeId
+  handleReselectAttributes = (
+    newComposedId: string,
+    selection: IAttributeMeta[]
+  ) => {
+    // re-selecting attributes in order to match the latest generated composedId.
+    const { composedId } = this.props;
+    this.props.removeAllAttributeSelections(composedId);
+    this.props.setSelectedAttributes(newComposedId, selection);
+  };
+
+  handleRestack = (newComposedId: string, quantity: number) => {
+    const { composedId } = this.props;
+    this.props.removeAllAttributeSelections(composedId);
+    this.props.removeProductFromCart(composedId);
+    this.props.changeProductQuantity(newComposedId, quantity);
+  };
+
+  handleSelection = (itemId: IAttribute['id']) => {
+    const {
+      composedId,
+      attributeId,
+      cartProductAttributeSelections,
+      cartProducts,
+    } = this.props;
+
+    const selection = cartProductAttributeSelections[composedId]
+      .filter((pair) => pair.attrId !== attributeId)
+      .concat([{ attrId: attributeId, itemId }]);
+
+    const product = cartProducts.products[composedId];
+    const newComposedId = generateComposedId(product, selection);
+
+    if (composedId !== newComposedId) {
+      const productQuantity = cartProducts.mappedQuantities[composedId];
+
+      if (newComposedId in cartProducts.products) {
+        return this.handleRestack(newComposedId, productQuantity);
+      }
+
+      this.handleReselectAttributes(newComposedId, selection);
+      this.handleReaddProductToCart(newComposedId, product, productQuantity);
+    }
+  };
+
+  findSelectedCartItemId = () => {
+    const { cartProductAttributeSelections, attributeId, composedId } =
+      this.props;
+
+    if (composedId in cartProductAttributeSelections) {
+      const foundMeta = cartProductAttributeSelections[composedId].find(
+        (pair) => pair.attrId === attributeId
       );
 
-      if (attribute) {
-        return attribute.itemId;
-      }
+      if (foundMeta) return foundMeta.itemId;
     }
+
     return '';
   };
 
@@ -68,13 +99,15 @@ class AttributeButtonsGroup extends React.Component<Props, State> {
       showName = true,
       nameSize = 'normal',
     } = this.props;
+
+    const selectedItemId = this.findSelectedCartItemId() || '';
     return (
       <>
         {showName && (
           <AttributeName nameSize={nameSize}>{`${name}:`}</AttributeName>
         )}
         <AttributeButtonsGroupWrapper>
-          {render(this.handleSelection, this.state.selectedItemId)}
+          {render(this.handleSelection, selectedItemId)}
         </AttributeButtonsGroupWrapper>
       </>
     );
