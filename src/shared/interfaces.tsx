@@ -31,3 +31,8 @@ export interface IAttribute {
   value: string;
   id: string;
 }
+
+export interface IAttributeMeta {
+  attrId: IAttributeSet['id'];
+  itemId: IAttribute['id'];
+}
