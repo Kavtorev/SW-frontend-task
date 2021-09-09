@@ -17,7 +17,7 @@ import {
   AddToCartButton,
   OutOfStockHolder,
   ProductAdvancedTitle,
-  AttributeButtonsGroup,
+  AttributeButtonsGroupLocal,
   AttributeButton,
   Price,
 } from '../../components';
@@ -119,9 +119,8 @@ class ProductPage extends React.Component<Props, State> {
               {attributes.map((set: IAttributeSet) => {
                 return (
                   <AttributeButtonsContainer key={nanoid()}>
-                    <AttributeButtonsGroup
+                    <AttributeButtonsGroupLocal
                       name={set.name}
-                      showName={true}
                       productId={id}
                       attributeId={set.id}
                       render={(handleSelection, selectedItemId) => {
@@ -134,9 +133,7 @@ class ProductPage extends React.Component<Props, State> {
                                   selected={selectedItemId === item.id}
                                   value={item.value}
                                   attributeType={set.type}
-                                  handleClick={() =>
-                                    handleSelection()(id, set.id, item.id)
-                                  }
+                                  handleClick={() => handleSelection(item.id)}
                                 >
                                   {item.displayValue}
                                 </AttributeButton>
