@@ -6,33 +6,21 @@ import { connector, PropsFromRedux } from '../../store';
 
 interface Props extends PropsFromRedux {
   gallery: string[];
+  composedId: string;
 }
 
-interface State {
-  currentIndex: number;
-}
-
-class ProductImageCarousel extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      currentIndex: 0,
-    };
-  }
-
-  handleStepClick = (step: number) => {
-    const len = this.props.gallery.length;
-    step >= 0
-      ? this.setState({ currentIndex: (this.state.currentIndex + 1) % len })
-      : this.setState({
-          currentIndex: (this.state.currentIndex - 1 + len) % len,
-        });
-  };
-
+class ProductImageCarousel extends React.Component<Props> {
   render() {
+    const {
+      mappedProductImageCarouselIndexes,
+      handleImageCarouselStep,
+      composedId,
+      gallery,
+    } = this.props;
+    const currentIndex = mappedProductImageCarouselIndexes[composedId] || 0;
     return (
       <ImageCard
-        src={this.props.gallery[this.state.currentIndex]}
+        src={gallery[currentIndex]}
         width='140px'
         height='100%'
         styleBody={{ position: 'relative' }}
@@ -43,11 +31,15 @@ class ProductImageCarousel extends React.Component<Props, State> {
               <>
                 <CartProductLeftArrow
                   src={chevronsrc}
-                  onClick={() => this.handleStepClick(-1)}
+                  onClick={() =>
+                    handleImageCarouselStep(composedId, -1, gallery.length)
+                  }
                 />
                 <CartProductRightArrow
                   src={chevronsrc}
-                  onClick={() => this.handleStepClick(1)}
+                  onClick={() =>
+                    handleImageCarouselStep(composedId, 1, gallery.length)
+                  }
                 />
               </>
             ) : (

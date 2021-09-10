@@ -46,9 +46,16 @@ class AttributeButtonsGroup extends React.Component<Props> {
 
   handleRestack = (newComposedId: string, quantity: number) => {
     const { composedId } = this.props;
+    this.props.removeImageCarouselComposedId(composedId);
     this.props.removeAllAttributeSelections(composedId);
     this.props.removeProductFromCart(composedId);
     this.props.changeProductQuantity(newComposedId, quantity);
+  };
+
+  handleImageCarouselUpdate = (newComposedId: string) => {
+    const { composedId } = this.props;
+    this.props.updateImageCarouselComposedId(composedId, newComposedId);
+    this.props.removeImageCarouselComposedId(composedId);
   };
 
   handleSelection = (itemId: IAttribute['id']) => {
@@ -64,6 +71,7 @@ class AttributeButtonsGroup extends React.Component<Props> {
       .concat([{ attrId: attributeId, itemId }]);
 
     const product = cartProducts.products[composedId];
+    const productQuantity = cartProducts.mappedQuantities[composedId];
     const productIndexInCart = Object.keys(cartProducts.products).findIndex(
       (compId) => compId === composedId
     );
@@ -71,12 +79,12 @@ class AttributeButtonsGroup extends React.Component<Props> {
     const newComposedId = generateComposedId(product, selection);
 
     if (composedId !== newComposedId) {
-      const productQuantity = cartProducts.mappedQuantities[composedId];
-
       if (newComposedId in cartProducts.products) {
         return this.handleRestack(newComposedId, productQuantity);
       }
 
+      // prevents image carousel from resetting
+      this.handleImageCarouselUpdate(newComposedId);
       this.handleReselectAttributes(newComposedId, selection);
       this.handleReaddProductToCart(
         newComposedId,

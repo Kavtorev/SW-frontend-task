@@ -21,7 +21,7 @@ class BagProductsList extends React.Component<Props> {
     return (
       <BagProductsListWrapper>
         {Object.keys(products).map((composedId) => {
-          const { id, gallery, brand, name, prices, attributes } =
+          const { gallery, brand, name, prices, attributes } =
             products[composedId];
           return (
             <ProductBagItem
@@ -29,7 +29,12 @@ class BagProductsList extends React.Component<Props> {
               composedId={composedId}
               increaseSrc={plussrc}
               decreaseSrc={minussrc}
-              rightRender={<ProductImageCarousel gallery={gallery} />}
+              rightRender={
+                <ProductImageCarousel
+                  gallery={gallery}
+                  composedId={composedId}
+                />
+              }
               productMeta={
                 <>
                   <ProductAdvancedTitle brand={brand} name={name} />
