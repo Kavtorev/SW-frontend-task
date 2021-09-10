@@ -10,7 +10,7 @@ export * from './CurrencySwitcher';
 export * from './OutOfStockHolder';
 export * from './Price';
 export * from './ProductAdvancedTitle';
-export * from './ProductBagItem';
+export * from './CartProductLayout';
 export * from './ProductCard';
 export * from './ProductImageCarousel';
 export * from './ProductsList';

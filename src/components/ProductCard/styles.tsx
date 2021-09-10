@@ -45,3 +45,5 @@ export const CartButton = styled.button`
   cursor: pointer;
   display: none;
 `;
+
+export const CartImage = styled.img``;

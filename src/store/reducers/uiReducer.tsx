@@ -17,10 +17,12 @@ export const uiReducer = (
   action: UiActionsType
 ) => {
   switch (action.type) {
-    case 'CLOSE_OR_OPEN_CART_POPPER':
-      return { ...state, isCartPopperOpen: !state.isCartPopperOpen };
-    case 'CLOSE_OR_OPEN_CURRENCY_MENU':
-      return { ...state, isCurrencyMenuOpen: !state.isCurrencyMenuOpen };
+    case 'CLOSE_ANY_MENUS':
+      return { ...state, isCartPopperOpen: false, isCurrencyMenuOpen: false };
+    case 'SET_OPEN_CART_POPPER':
+      return { ...state, isCartPopperOpen: action.payload };
+    case 'SET_OPEN_CURRENCY_MENU':
+      return { ...state, isCurrencyMenuOpen: action.payload };
     case 'IMAGE_CAROUSEL_MAKE_STEP':
       const { composedId, carouselLength, step } = action.payload;
       const len = carouselLength;

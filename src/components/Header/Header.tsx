@@ -5,6 +5,7 @@ import {
   ActionsWrapper,
   Navigation,
   LogoWrapper,
+  LogoImage,
   Item,
 } from './styles';
 import logosrc from './assets/Brand icon.svg';
@@ -13,34 +14,38 @@ import CurrencySwitcher from '../CurrencySwitcher/CurrencySwitcher';
 import { connector, PropsFromRedux } from '../../store';
 import { NavLink } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+
 interface Props extends PropsFromRedux {}
 
 class Header extends React.Component<Props> {
   render() {
     const { categories, selectCategory } = this.props;
+
+    const onNavLinkActiveStyle = {
+      borderBottom: '2px solid var(--c-primary)',
+      color: 'var(--c-primary)',
+      fontWeight: 600,
+    };
+
+    const renderedNavLinks = categories.map(({ name }) => (
+      <Item key={nanoid()}>
+        <NavLink
+          onClick={() => selectCategory(name)}
+          to={`/${name}`}
+          activeStyle={onNavLinkActiveStyle}
+        >
+          {name}
+        </NavLink>
+      </Item>
+    ));
+
     return (
       <StyledHeader>
         <Navigation>
-          <List>
-            {categories.map(({ name }) => (
-              <Item key={nanoid()}>
-                <NavLink
-                  onClick={() => selectCategory(name)}
-                  to={`/${name}`}
-                  activeStyle={{
-                    borderBottom: '2px solid var(--c-primary)',
-                    color: 'var(--c-primary)',
-                    fontWeight: 600,
-                  }}
-                >
-                  {name}
-                </NavLink>
-              </Item>
-            ))}
-          </List>
+          <List>{renderedNavLinks}</List>
         </Navigation>
         <LogoWrapper>
-          <img src={logosrc} alt='Logo' />
+          <LogoImage src={logosrc} alt='Logo' />
         </LogoWrapper>
         <ActionsWrapper>
           <CurrencySwitcher />

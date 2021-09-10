@@ -2,7 +2,7 @@ import React from 'react';
 import { PropsFromRedux, connector } from '../../store';
 import { CartProductsList } from '../CartProductsList';
 import { Price } from '../Price';
-import { Link } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import {
   CartPopperContainer,
   CartPopperFooter,
@@ -11,11 +11,11 @@ import {
   CheckOutButton,
   CartPopperTotalWrapper,
   Total,
+  ViewBagLink,
 } from './styles';
-import { IProduct } from '../../shared';
 import ClickAwayListener from 'react-click-away-listener';
 
-interface Props extends PropsFromRedux {}
+interface Props extends PropsFromRedux, RouteComponentProps {}
 
 class CartPopper extends React.Component<Props> {
   getQuantityText = (totalQuantity: number) => {
@@ -52,20 +52,30 @@ class CartPopper extends React.Component<Props> {
     return result;
   };
 
+  handleViewBagClick = () => this.props.history.push('/cart');
+
   render() {
     const {
       cartProducts: { totalQuantity },
-      closeOrOpenCartPopper,
+      setOpenCartPopper,
     } = this.props;
 
+    const itemsQuantityText = `${totalQuantity} ${this.getQuantityText(
+      totalQuantity
+    )}`;
+
+    const priceOverridenStyle = {
+      fontWeight: 700,
+      lineHeight: 1.125,
+      fontSize: '1rem',
+      maxWidth: '200px',
+    };
+
     return (
-      <ClickAwayListener onClickAway={closeOrOpenCartPopper}>
+      <ClickAwayListener onClickAway={() => setOpenCartPopper(false)}>
         <CartPopperContainer>
           <CartPopperHeader>
-            My Bag,{' '}
-            <ItemsQuantity>{`${totalQuantity} ${this.getQuantityText(
-              totalQuantity
-            )}`}</ItemsQuantity>
+            My Bag, <ItemsQuantity>{itemsQuantityText}</ItemsQuantity>
           </CartPopperHeader>
           <CartProductsList />
           <CartPopperTotalWrapper>
@@ -73,35 +83,13 @@ class CartPopper extends React.Component<Props> {
             <Price
               prices={this.getTotalPrice()}
               showTitle={false}
-              style={{
-                fontWeight: 700,
-                lineHeight: 1.125,
-                fontSize: '1rem',
-                maxWidth: '200px',
-              }}
+              style={priceOverridenStyle}
             />
           </CartPopperTotalWrapper>
           <CartPopperFooter>
-            <Link
-              to='/cart'
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textTransform: 'uppercase',
-                fontSize: 'var(--fs-xs)',
-                border: '1px solid var(--c-black)',
-                width: '140px',
-                height: '43px',
-                cursor: 'pointer',
-                fontWeight: 600,
-                backgroundColor: 'transparent',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
+            <ViewBagLink onClick={this.handleViewBagClick}>
               View Bag
-            </Link>
+            </ViewBagLink>
             <CheckOutButton>Check out</CheckOutButton>
           </CartPopperFooter>
         </CartPopperContainer>
@@ -110,4 +98,4 @@ class CartPopper extends React.Component<Props> {
   }
 }
 
-export default connector(CartPopper);
+export default connector(withRouter(CartPopper));

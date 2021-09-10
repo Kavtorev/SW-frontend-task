@@ -1,7 +1,5 @@
 import { IProduct, IAttributeMeta } from './interfaces';
 
-// attributes should be strictly ordered
-
 // generates a composed id like: <product_id>_<attribute1_id>_<item1_id>_<attribute2_id>_<item2_id>...
 // in order to uniquely identify a product and its selected attributes in a cart
 // + to enable stackable behavior in case a user changes his preferences
@@ -13,7 +11,7 @@ export const generateComposedId = (
 ) => {
   let composedId = product.id;
   // checking if a product has any attributes to prevent
-  // unnecessary iteration
+  // unnecessary iterations
   if (product.attributes.length) {
     for (let orderedAttribute of product.attributes) {
       const foundUnorderedAttribute = selection.find(

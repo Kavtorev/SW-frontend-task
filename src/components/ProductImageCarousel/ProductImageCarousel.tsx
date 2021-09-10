@@ -17,7 +17,24 @@ class ProductImageCarousel extends React.Component<Props> {
       composedId,
       gallery,
     } = this.props;
+
     const currentIndex = mappedProductImageCarouselIndexes[composedId] || 0;
+
+    const imageCardRender = this.props.gallery.length > 1 && (
+      <>
+        <CartProductLeftArrow
+          src={chevronsrc}
+          onClick={() =>
+            handleImageCarouselStep(composedId, -1, gallery.length)
+          }
+        />
+        <CartProductRightArrow
+          src={chevronsrc}
+          onClick={() => handleImageCarouselStep(composedId, 1, gallery.length)}
+        />
+      </>
+    );
+
     return (
       <ImageCard
         src={gallery[currentIndex]}
@@ -25,28 +42,7 @@ class ProductImageCarousel extends React.Component<Props> {
         height='100%'
         styleBody={{ position: 'relative' }}
         styleImage={{ objectFit: 'contain' }}
-        render={() => (
-          <>
-            {this.props.gallery.length > 1 ? (
-              <>
-                <CartProductLeftArrow
-                  src={chevronsrc}
-                  onClick={() =>
-                    handleImageCarouselStep(composedId, -1, gallery.length)
-                  }
-                />
-                <CartProductRightArrow
-                  src={chevronsrc}
-                  onClick={() =>
-                    handleImageCarouselStep(composedId, 1, gallery.length)
-                  }
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        )}
+        render={() => <>{imageCardRender}</>}
       />
     );
   }

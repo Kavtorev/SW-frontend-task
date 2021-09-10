@@ -47,5 +47,4 @@ export const GlobalStyle = createGlobalStyle`
         color: var(--c-black);
     }
     
-    
 `;

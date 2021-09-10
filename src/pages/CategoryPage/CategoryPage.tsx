@@ -13,20 +13,20 @@ interface Props extends PropsFromRedux, RouteComponentProps<MatchParams> {}
 
 class CategoryPage extends React.Component<Props> {
   componentDidMount() {
-    const { fetchProductsByCategoryName } = this.props;
-    const categoryName = this.findCategoryNameByParamMatch();
-    fetchProductsByCategoryName(categoryName);
-    console.log(this.findCategoryNameByParamMatch());
+    this.handleCategoryChange();
   }
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.selectedCategory !== this.props.selectedCategory) {
-      const { fetchProductsByCategoryName } = this.props;
-      const categoryName = this.findCategoryNameByParamMatch();
-      fetchProductsByCategoryName(categoryName);
-      console.log(this.findCategoryNameByParamMatch());
+      this.handleCategoryChange();
     }
   }
+
+  handleCategoryChange = () => {
+    const { fetchProductsByCategoryName } = this.props;
+    const categoryName = this.findCategoryNameByParamMatch();
+    fetchProductsByCategoryName(categoryName);
+  };
 
   findCategoryNameByParamMatch = () => {
     const { categories, match } = this.props;
@@ -48,11 +48,13 @@ class CategoryPage extends React.Component<Props> {
     if (categoryProductsDataLoading) {
       return <h1>Please wait products are loading...</h1>;
     }
+
+    const title =
+      selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+
     return (
       <section>
-        <CategoryPageTitle>
-          {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
-        </CategoryPageTitle>
+        <CategoryPageTitle>{title}</CategoryPageTitle>
         <ProductsListWrapper>
           <ProductsList />
         </ProductsListWrapper>

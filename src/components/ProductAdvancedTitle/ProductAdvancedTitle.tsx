@@ -12,7 +12,7 @@ export class ProductAdvancedTitle extends React.Component<Props> {
   render() {
     const { brand, name, brandStyle = {}, nameStyle = {} } = this.props;
     return (
-      <div className=''>
+      <div>
         <Brand style={{ ...brandStyle }}>{brand}</Brand>
         <Name style={{ ...nameStyle }}>{name}</Name>
       </div>

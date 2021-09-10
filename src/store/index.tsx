@@ -6,7 +6,7 @@ import {
   cartReducer,
   attributeReducer,
 } from './reducers';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 import { requestInitialData, requestProductsByCategoryName } from './actions';
 import {
   IProduct,
@@ -22,8 +22,8 @@ export const rootReducers = combineReducers({
   cartRedcucer: cartReducer,
   attributeReducer,
 });
-const logger = createLogger();
-export const store = createStore(rootReducers, applyMiddleware(logger));
+// const logger = createLogger();
+export const store = createStore(rootReducers, applyMiddleware());
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -31,6 +31,8 @@ export type AppDispatch = typeof store.dispatch;
 const mapState = (state: RootState) => ({
   isCartPopperOpen: state.uiReducer.isCartPopperOpen,
   isCurrencyMenuOpen: state.uiReducer.isCurrencyMenuOpen,
+  mappedProductImageCarouselIndexes:
+    state.uiReducer.mappedProductImageCarouselIndexes,
   selectedCurrency: state.requestRemoteDataReducer.selectedCurrency,
   selectedCategory: state.requestRemoteDataReducer.selectedCategory,
   categories: state.requestRemoteDataReducer.categories,
@@ -52,9 +54,38 @@ const mapState = (state: RootState) => ({
 });
 
 const mapDispatch = (dispatch: AppDispatch) => ({
-  closeOrOpenCartPopper: () => dispatch({ type: 'CLOSE_OR_OPEN_CART_POPPER' }),
+  setOpenCartPopper: (flag: boolean) =>
+    dispatch({ type: 'SET_OPEN_CART_POPPER', payload: flag }),
 
-  toggleCurrencyMenu: () => dispatch({ type: 'CLOSE_OR_OPEN_CURRENCY_MENU' }),
+  setOpenCurrencyMenu: (flag: boolean) =>
+    dispatch({ type: 'SET_OPEN_CURRENCY_MENU', payload: flag }),
+
+  closeAnyMenus: () => dispatch({ type: 'CLOSE_ANY_MENUS' }),
+
+  handleImageCarouselStep: (
+    composedId: string,
+    step: number,
+    carouselLength: number
+  ) =>
+    dispatch({
+      type: 'IMAGE_CAROUSEL_MAKE_STEP',
+      payload: { composedId, step, carouselLength },
+    }),
+
+  updateImageCarouselComposedId: (
+    previousComposedId: string,
+    composedId: string
+  ) =>
+    dispatch({
+      type: 'UPDATE_IMAGE_CAROUSEL_COMPOSED_ID',
+      payload: { previousComposedId, composedId },
+    }),
+
+  removeImageCarouselComposedId: (composedId: string) =>
+    dispatch({
+      type: 'REMOVE_IMAGE_CAROUSEL_COMPOSED_ID',
+      payload: composedId,
+    }),
 
   selectCurrency: (payload: string) =>
     dispatch({ type: 'SELECT_CURRENCY', payload }),

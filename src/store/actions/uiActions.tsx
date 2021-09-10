@@ -1,6 +1,7 @@
 export type UiActionsType =
-  | { type: 'CLOSE_OR_OPEN_CART_POPPER' }
-  | { type: 'CLOSE_OR_OPEN_CURRENCY_MENU' }
+  | { type: 'SET_OPEN_CART_POPPER'; payload: boolean }
+  | { type: 'SET_OPEN_CURRENCY_MENU'; payload: boolean }
+  | { type: 'CLOSE_ANY_MENUS' }
   | { type: 'SELECT_CURRENCY'; payload: string }
   | { type: 'SELECT_CATEGORY'; payload: string }
   | {

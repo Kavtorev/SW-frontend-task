@@ -1,5 +1,10 @@
 import React from 'react';
-import { ProductCardContainer, ProductFullName, CartButton } from './styles';
+import {
+  ProductCardContainer,
+  ProductFullName,
+  CartButton,
+  CartImage,
+} from './styles';
 import { OutOfStockHolder } from '../OutOfStockHolder';
 import iconsrc from './assets/Circle Icon.svg';
 import { ImageCard } from '../../common';
@@ -13,9 +18,33 @@ interface Props {
 }
 
 export class ProductCard extends React.Component<Props> {
+  cartButtonClickHandler =
+    (clickHandler: () => void) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      clickHandler();
+    };
+
   render() {
     const { prices, name, gallery, inStock, brand, id } = this.props.product;
-    const { handleOnClick } = this.props;
+    const { handleOnClick, product } = this.props;
+
+    const productFullName = `${brand} ${name}`;
+
+    const imageCardRender = inStock ? (
+      <AddToCartButton
+        product={product}
+        render={(handleClick) => {
+          return (
+            <CartButton onClick={this.cartButtonClickHandler(handleClick)}>
+              <CartImage src={iconsrc} alt='Add to Cart' />
+            </CartButton>
+          );
+        }}
+      />
+    ) : (
+      <OutOfStockHolder>out of stock</OutOfStockHolder>
+    );
 
     return (
       <ProductCardContainer
@@ -27,35 +56,9 @@ export class ProductCard extends React.Component<Props> {
           width='354px'
           height='330px'
           styleBody={{ position: 'relative' }}
-          render={() => {
-            return (
-              <>
-                {inStock ? (
-                  <AddToCartButton
-                    product={this.props.product}
-                    render={(handleClick) => {
-                      return (
-                        <CartButton
-                          onClick={(
-                            event: React.MouseEvent<HTMLButtonElement>
-                          ) => {
-                            event.stopPropagation();
-                            handleClick();
-                          }}
-                        >
-                          <img src={iconsrc} alt='Add to Cart' />
-                        </CartButton>
-                      );
-                    }}
-                  />
-                ) : (
-                  <OutOfStockHolder>out of stock</OutOfStockHolder>
-                )}
-              </>
-            );
-          }}
+          render={() => <>{imageCardRender}</>}
         />
-        <ProductFullName>{`${brand} ${name}`}</ProductFullName>
+        <ProductFullName>{productFullName}</ProductFullName>
         <Price prices={prices} size='normal' showTitle={false} />
       </ProductCardContainer>
     );

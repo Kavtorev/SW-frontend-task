@@ -53,3 +53,5 @@ export const CurrencyMenuOptions = styled.ul`
 export const CurrencyMenuOption = styled.li`
   cursor: pointer;
 `;
+
+export const ChevronImage = styled.img``;

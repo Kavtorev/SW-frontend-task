@@ -1,7 +1,7 @@
 import { AttributeActionsType } from './attributeActions';
 import { CartActionsType } from './cartActions';
 import { RemoteActionsType } from './remoteActions';
-import { UiActionsType } from './uiAction';
+import { UiActionsType } from './uiActions';
 
 export type ActionsType =
   | AttributeActionsType
@@ -12,4 +12,4 @@ export type ActionsType =
 export * from './attributeActions';
 export * from './cartActions';
 export * from './remoteActions';
-export * from './uiAction';
+export * from './uiActions';

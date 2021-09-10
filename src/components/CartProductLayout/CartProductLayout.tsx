@@ -19,18 +19,22 @@ interface Props extends PropsFromRedux {
   composedId: string;
 }
 
-class ProductBagItem extends React.Component<Props> {
+class CartProductLayout extends React.Component<Props> {
+  handleProductRemoval = () => {
+    const { composedId } = this.props;
+    this.props.removeProductFromCart(composedId);
+    this.props.removeAllAttributeSelections(composedId);
+    this.props.removeImageCarouselComposedId(composedId);
+  };
+
   handleDecreaseClick = () => {
     const {
       composedId,
       cartProducts: { mappedQuantities },
     } = this.props;
 
-    if (!(mappedQuantities[composedId] - 1)) {
-      this.props.removeProductFromCart(composedId);
-      this.props.removeAllAttributeSelections(composedId);
-      return;
-    }
+    const isLastItem = !(mappedQuantities[composedId] - 1);
+    if (isLastItem) return this.handleProductRemoval();
 
     this.props.changeProductQuantity(composedId, -1);
   };
@@ -74,4 +78,4 @@ class ProductBagItem extends React.Component<Props> {
   }
 }
 
-export default connector(ProductBagItem);
+export default connector(CartProductLayout);

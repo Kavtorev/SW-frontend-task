@@ -77,91 +77,107 @@ class ProductPage extends React.Component<Props, State> {
       id,
     } = product;
 
+    const renderedProductGallery = gallery.map((imgSrc: string) => {
+      return (
+        <ImageCard
+          key={nanoid()}
+          src={imgSrc}
+          width='80px'
+          height='80px'
+          styleBody={{ cursor: 'pointer' }}
+          handleClick={() => this.handleImageSelection(imgSrc)}
+        />
+      );
+    });
+
+    const productHeroImageRender = inStock && (
+      <OutOfStockHolder>Out of stock</OutOfStockHolder>
+    );
+
+    const productHeroImageOverridenStyleBody: React.CSSProperties = {
+      position: 'relative',
+      cursor: 'pointer',
+    };
+
+    const renderAttributeItems = (
+      type: IAttributeSet['type'],
+      items: IAttribute[],
+      handleSelection: (itemId: IAttribute['id']) => void,
+      selectedItemId: IAttribute['id']
+    ) => {
+      return (
+        <>
+          {items.map((item: IAttribute) => {
+            return (
+              <AttributeButton
+                key={nanoid()}
+                selected={selectedItemId === item.id}
+                value={item.value}
+                attributeType={type}
+                handleClick={() => handleSelection(item.id)}
+              >
+                {item.displayValue}
+              </AttributeButton>
+            );
+          })}
+        </>
+      );
+    };
+
+    const renderedAttributeSet = attributes.map((set: IAttributeSet) => {
+      return (
+        <AttributeButtonsContainer key={nanoid()}>
+          <AttributeButtonsGroupLocal
+            name={set.name}
+            productId={id}
+            attributeId={set.id}
+            render={(handleSelection, selectedItemId) =>
+              renderAttributeItems(
+                set.type,
+                set.items,
+                handleSelection,
+                selectedItemId
+              )
+            }
+          />
+        </AttributeButtonsContainer>
+      );
+    });
+
+    const addToCartButton = inStock && (
+      <AddToCartButton
+        product={product}
+        render={(handleClick) => {
+          return <CartButton onClick={handleClick}>Add to cart</CartButton>;
+        }}
+      />
+    );
+
+    const sanitizedDescription = {
+      __html: DOMPurify.sanitize(description),
+    };
+
     return (
       <section>
         <ProductPageWrapper>
-          <ProductPageGallery>
-            {gallery.map((imgSrc: string) => {
-              return (
-                <ImageCard
-                  key={nanoid()}
-                  src={imgSrc}
-                  width='80px'
-                  height='80px'
-                  styleBody={{ cursor: 'pointer' }}
-                  handleClick={() => this.handleImageSelection(imgSrc)}
-                />
-              );
-            })}
-          </ProductPageGallery>
+          <ProductPageGallery>{renderedProductGallery}</ProductPageGallery>
           <ProductPageDetailsSide>
             <ProductImageWrapper>
               <ImageCard
                 src={this.state.selectedImage}
                 width='610px'
                 height='510px'
-                styleBody={{ position: 'relative', cursor: 'pointer' }}
-                render={() => {
-                  return (
-                    <>
-                      {inStock ? (
-                        <></>
-                      ) : (
-                        <OutOfStockHolder>Out of stock</OutOfStockHolder>
-                      )}
-                    </>
-                  );
-                }}
+                styleBody={productHeroImageOverridenStyleBody}
+                render={() => <>{productHeroImageRender}</>}
               />
             </ProductImageWrapper>
             <ProductPagePrimaryDetails>
               <ProductAdvancedTitle brand={brand} name={name} />
-              {attributes.map((set: IAttributeSet) => {
-                return (
-                  <AttributeButtonsContainer key={nanoid()}>
-                    <AttributeButtonsGroupLocal
-                      name={set.name}
-                      productId={id}
-                      attributeId={set.id}
-                      render={(handleSelection, selectedItemId) => {
-                        return (
-                          <>
-                            {set.items.map((item: IAttribute) => {
-                              return (
-                                <AttributeButton
-                                  key={nanoid()}
-                                  selected={selectedItemId === item.id}
-                                  value={item.value}
-                                  attributeType={set.type}
-                                  handleClick={() => handleSelection(item.id)}
-                                >
-                                  {item.displayValue}
-                                </AttributeButton>
-                              );
-                            })}
-                          </>
-                        );
-                      }}
-                    />
-                  </AttributeButtonsContainer>
-                );
-              })}
-
+              {renderedAttributeSet}
               <Price prices={prices} size={'large'} />
-              {inStock && (
-                <AddToCartButton
-                  product={product}
-                  render={(handleClick) => {
-                    return (
-                      <CartButton onClick={handleClick}>Add to cart</CartButton>
-                    );
-                  }}
-                />
-              )}
+              {addToCartButton}
               <ProductDescription
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(description),
-                }}
+                dangerouslySetInnerHTML={sanitizedDescription}
               />
             </ProductPagePrimaryDetails>
           </ProductPageDetailsSide>

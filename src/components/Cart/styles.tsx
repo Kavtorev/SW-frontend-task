@@ -75,6 +75,7 @@ export const ViewBagLink = styled.a`
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  text-decoration: none;
   font-size: var(--fs-xs);
   border: 1px solid var(--c-black);
   width: 140px;
@@ -82,6 +83,7 @@ export const ViewBagLink = styled.a`
   cursor: pointer;
   font-weight: var(--fw-semibold);
   background-color: transparent;
+  color: inherit;
 `;
 
 export const CheckOutButton = styled(Button)`
@@ -89,3 +91,5 @@ export const CheckOutButton = styled(Button)`
   color: #ffffff;
   border: 0;
 `;
+
+export const CartImage = styled.img``;

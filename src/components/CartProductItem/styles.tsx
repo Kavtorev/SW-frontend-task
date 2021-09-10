@@ -1,13 +1,5 @@
 import styled from 'styled-components';
-import { ScrollYAuto, ScrollAutoBoth } from '../../common';
-
-export const CartProductsListWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  height: 300px;
-  ${ScrollYAuto}
-`;
+import { ScrollAutoBoth } from '../../common';
 
 export const AttributeButtonsGroupWrapper = styled.div`
   max-height: 80px;

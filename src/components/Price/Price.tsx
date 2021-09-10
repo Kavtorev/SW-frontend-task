@@ -22,13 +22,21 @@ class Price extends React.Component<Props> {
       style = {},
       multiplyBy = 1,
     } = this.props;
-    const price = prices.find(({ currency }) => currency === selectedCurrency);
+
+    const price = prices.find((price) => price.currency === selectedCurrency);
+
     const currencyIcon = currencyMapper[price?.currency || ''] || '';
+    const priceAmount = price?.amount || 0;
+    const priceMultipliedAmount = (priceAmount * multiplyBy).toFixed(2);
+
+    const priceText = `${currencyIcon}${priceMultipliedAmount}`;
+    const title = showTitle && <PriceTitle>Price:</PriceTitle>;
+
     return (
       <div>
-        {showTitle && <PriceTitle>Price:</PriceTitle>}
+        {title}
         <StyledProductPrice size={size} style={{ ...style }}>
-          {`${currencyIcon}${((price?.amount || 0) * multiplyBy).toFixed(2)}`}
+          {priceText}
         </StyledProductPrice>
       </div>
     );

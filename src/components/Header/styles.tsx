@@ -48,6 +48,8 @@ export const LogoWrapper = styled.span`
   transform: translate(-60%, -50%);
 `;
 
+export const LogoImage = styled.img``;
+
 export const ActionsWrapper = styled.div`
   display: flex;
   justify-content: center;

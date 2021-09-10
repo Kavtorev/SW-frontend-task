@@ -61,8 +61,7 @@ class AddToCartButton extends React.Component<Props> {
     );
 
     if (composedId in mappedQuantities) {
-      changeProductQuantity(composedId, 1);
-      return;
+      return changeProductQuantity(composedId, 1);
     }
 
     this.handleAddProductToCart(composedId);

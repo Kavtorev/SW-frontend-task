@@ -4,6 +4,7 @@ import { ProductCard } from '../ProductCard';
 import { ProductsListContainer } from './styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+
 interface MathProps {
   id: string;
 }
@@ -11,12 +12,12 @@ interface Props extends PropsFromRedux, RouteComponentProps<MathProps> {}
 
 class ProductsList extends React.Component<Props> {
   handleProductCardClick = (id: string) => {
-    const { history } = this.props;
-    history.push(`/details/${id}`);
+    this.props.history.push(`/details/${id}`);
   };
 
   render() {
     const { selectedCategory, fetchedProducts } = this.props;
+
     const filteredProducts =
       selectedCategory === 'all'
         ? fetchedProducts
@@ -24,7 +25,7 @@ class ProductsList extends React.Component<Props> {
             (product) => product.category === selectedCategory
           );
 
-    const renderedProducts = filteredProducts.map((product, idx) => {
+    const renderedProducts = filteredProducts.map((product) => {
       return (
         <ProductCard
           key={nanoid()}
