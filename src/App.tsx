@@ -1,16 +1,28 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Redirect,
+  withRouter,
+  RouteComponentProps,
+} from 'react-router-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { CartPage, CategoryPage, ProductPage } from './pages';
 import { Normalize } from 'styled-normalize';
 import { StyledContainer, Header, CartOverlay } from './components';
 import { connector, PropsFromRedux } from './store';
 
-interface Props extends PropsFromRedux {}
+interface Props extends PropsFromRedux, RouteComponentProps {}
 
 class App extends React.Component<Props> {
   componentDidMount() {
     this.props.fetchInitialData();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.props.closeAnyMenus();
+    }
   }
 
   render() {
@@ -43,4 +55,4 @@ class App extends React.Component<Props> {
   }
 }
 
-export default connector(App);
+export default connector(withRouter(App));
