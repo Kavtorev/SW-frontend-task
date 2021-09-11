@@ -28,43 +28,34 @@ interface MatchProps {
   id: string;
 }
 
-interface State {
-  selectedImage: string;
-}
-
 interface Props extends PropsFromRedux, RouteComponentProps<MatchProps> {}
 
-class ProductPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      selectedImage: '',
-    };
-  }
-
+class ProductPage extends React.Component<Props> {
   componentDidMount() {
-    const product = this.findProductById(this.props.match.params.id);
-
-    if (product) {
-      this.setState({ selectedImage: product.gallery[0] });
-    }
+    const { fetchProductById, match } = this.props;
+    fetchProductById(match.params.id);
   }
 
-  findProductById = (id: string) => {
-    return this.props.fetchedProducts.find((prod: IProduct) => prod.id === id);
-  };
-
-  handleImageSelection = (imageSrc: string) =>
-    this.setState({ selectedImage: imageSrc });
+  findProductById = (id: string) =>
+    this.props.fetchedProducts.find((prod: IProduct) => prod.id === id);
 
   render() {
-    const { history, match } = this.props;
-    const product = this.findProductById(match.params.id);
+    const {
+      fetchedProduct,
+      productLoading,
+      productError,
+      selectGalleryImage,
+      selectedGalleryImageSrc,
+    } = this.props;
 
-    if (!product) {
-      history.push('/all');
-      return <></>;
-    }
+    if (productLoading) return <h1>Please wait product is loading...</h1>;
+    if (productError)
+      return (
+        <h1>
+          Either product doesn't exist or you are experiencing connection
+          problems
+        </h1>
+      );
 
     const {
       gallery,
@@ -75,22 +66,20 @@ class ProductPage extends React.Component<Props, State> {
       inStock,
       attributes,
       id,
-    } = product;
+    } = fetchedProduct;
 
-    const renderedProductGallery = gallery.map((imgSrc: string) => {
-      return (
-        <ImageCard
-          key={nanoid()}
-          src={imgSrc}
-          width='80px'
-          height='80px'
-          styleBody={{ cursor: 'pointer' }}
-          handleClick={() => this.handleImageSelection(imgSrc)}
-        />
-      );
-    });
+    const renderedProductGallery = gallery.map((imgSrc: string) => (
+      <ImageCard
+        key={nanoid()}
+        src={imgSrc}
+        width='80px'
+        height='80px'
+        styleBody={{ cursor: 'pointer' }}
+        handleOnMouseOver={() => selectGalleryImage(imgSrc)}
+      />
+    ));
 
-    const productHeroImageRender = inStock && (
+    const productHeroImageRender = !inStock && (
       <OutOfStockHolder>Out of stock</OutOfStockHolder>
     );
 
@@ -104,25 +93,23 @@ class ProductPage extends React.Component<Props, State> {
       items: IAttribute[],
       handleSelection: (itemId: IAttribute['id']) => void,
       selectedItemId: IAttribute['id']
-    ) => {
-      return (
-        <>
-          {items.map((item: IAttribute) => {
-            return (
-              <AttributeButton
-                key={nanoid()}
-                selected={selectedItemId === item.id}
-                value={item.value}
-                attributeType={type}
-                handleClick={() => handleSelection(item.id)}
-              >
-                {item.displayValue}
-              </AttributeButton>
-            );
-          })}
-        </>
-      );
-    };
+    ) => (
+      <>
+        {items.map((item: IAttribute) => {
+          return (
+            <AttributeButton
+              key={nanoid()}
+              selected={selectedItemId === item.id}
+              value={item.value}
+              attributeType={type}
+              handleClick={() => handleSelection(item.id)}
+            >
+              {item.displayValue}
+            </AttributeButton>
+          );
+        })}
+      </>
+    );
 
     const renderedAttributeSet = attributes.map((set: IAttributeSet) => {
       return (
@@ -146,7 +133,7 @@ class ProductPage extends React.Component<Props, State> {
 
     const addToCartButton = inStock && (
       <AddToCartButton
-        product={product}
+        product={fetchedProduct}
         render={(handleClick) => {
           return <CartButton onClick={handleClick}>Add to cart</CartButton>;
         }}
@@ -164,7 +151,7 @@ class ProductPage extends React.Component<Props, State> {
           <ProductPageDetailsSide>
             <ProductImageWrapper>
               <ImageCard
-                src={this.state.selectedImage}
+                src={selectedGalleryImageSrc}
                 width='610px'
                 height='510px'
                 styleBody={productHeroImageOverridenStyleBody}

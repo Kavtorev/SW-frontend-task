@@ -9,7 +9,6 @@ import { OutOfStockHolder } from '../OutOfStockHolder';
 import iconsrc from './assets/Circle Icon.svg';
 import { ImageCard } from '../../common';
 import { Price } from '../Price';
-import { AddToCartButton } from '../AddToCartButton';
 import { IProduct } from '../../shared';
 
 interface Props {
@@ -18,30 +17,16 @@ interface Props {
 }
 
 export class ProductCard extends React.Component<Props> {
-  cartButtonClickHandler =
-    (clickHandler: () => void) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      clickHandler();
-    };
-
   render() {
     const { prices, name, gallery, inStock, brand, id } = this.props.product;
-    const { handleOnClick, product } = this.props;
+    const { handleOnClick } = this.props;
 
     const productFullName = `${brand} ${name}`;
 
     const imageCardRender = inStock ? (
-      <AddToCartButton
-        product={product}
-        render={(handleClick) => {
-          return (
-            <CartButton onClick={this.cartButtonClickHandler(handleClick)}>
-              <CartImage src={iconsrc} alt='Add to Cart' />
-            </CartButton>
-          );
-        }}
-      />
+      <CartButton>
+        <CartImage src={iconsrc} alt='Add to Cart' />
+      </CartButton>
     ) : (
       <OutOfStockHolder>out of stock</OutOfStockHolder>
     );

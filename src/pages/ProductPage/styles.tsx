@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from '../../common';
-import { ScrollY, ScrollYAuto } from '../../common';
+import { ScrollYAuto } from '../../common';
 
 export const ProductPageWrapper = styled.div`
   display: flex;
@@ -17,7 +17,8 @@ export const ProductPageGallery = styled.div`
   }
 
   height: 510px;
-  ${ScrollY}
+  ${ScrollYAuto}
+  direction: rtl;
 `;
 export const ProductPageDetailsSide = styled.div`
   display: flex;

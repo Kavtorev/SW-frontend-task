@@ -19,7 +19,7 @@ interface Props extends PropsFromRedux {}
 
 class Header extends React.Component<Props> {
   render() {
-    const { categories, selectCategory } = this.props;
+    const { categories } = this.props;
 
     const onNavLinkActiveStyle = {
       borderBottom: '2px solid var(--c-primary)',
@@ -29,11 +29,7 @@ class Header extends React.Component<Props> {
 
     const renderedNavLinks = categories.map(({ name }) => (
       <Item key={nanoid()}>
-        <NavLink
-          onClick={() => selectCategory(name)}
-          to={`/${name}`}
-          activeStyle={onNavLinkActiveStyle}
-        >
+        <NavLink to={`/${name}`} activeStyle={onNavLinkActiveStyle}>
           {name}
         </NavLink>
       </Item>

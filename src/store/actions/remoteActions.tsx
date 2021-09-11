@@ -1,5 +1,9 @@
 import { ICategory, IProduct } from '../../shared';
-import { GET_INITIAL_DATA, GET_PRODUCTS_BY_CATEGORY_NAME } from '../../graphql';
+import {
+  GET_INITIAL_DATA,
+  GET_PRODUCTS_BY_CATEGORY_NAME,
+  GET_PRODUCT_BY_ID,
+} from '../../graphql';
 import { client } from '../../graphql';
 import { Dispatch } from 'react';
 
@@ -10,6 +14,7 @@ interface RemoteData {
 }
 
 export type RemoteActionsType =
+  | { type: 'REQUEST_INITIAL_DATA_PENDING' }
   | {
       type: 'REQUEST_INITIAL_DATA_SUCCESS';
       payload: {
@@ -18,15 +23,25 @@ export type RemoteActionsType =
       };
     }
   | { type: 'REQUEST_INITIAL_DATA_ERROR'; payload: string }
-  | { type: 'REQUEST_INITIAL_DATA_PENDING' }
   | { type: 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_PENDING' }
   | {
       type: 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_SUCCESS';
       payload: { products: IProduct[] };
     }
   | { type: 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_ERROR'; payload: string }
+  | { type: 'REQUEST_PRODUCT_BY_ID_PENDING' }
+  | {
+      type: 'REQUEST_PRODUCT_BY_ID_SUCCESS';
+      payload: {
+        product: IProduct;
+      };
+    }
+  | { type: 'REQUEST_PRODUCT_BY_ID_ERROR'; payload: string }
   | { type: 'SELECT_CURRENCY'; payload: string }
-  | { type: 'SELECT_CATEGORY'; payload: string };
+  | { type: 'SELECT_CATEGORY'; payload: string }
+  | { type: 'SELECT_GALLERY_IMAGE'; payload: string };
+
+// throw an error if data is null
 
 export const requestInitialData = async (
   dispatch: Dispatch<RemoteActionsType>
@@ -77,5 +92,24 @@ export const requestProductsByCategoryName = async (
       type: 'REQUEST_PRODUCTS_BY_CATEGORY_NAME_ERROR',
       payload: 'error',
     });
+  }
+};
+
+export const requestProductById = async (
+  dispatch: Dispatch<RemoteActionsType>,
+  productId: IProduct['id']
+) => {
+  dispatch({ type: 'REQUEST_PRODUCT_BY_ID_PENDING' });
+  try {
+    const { product } = (
+      await client.query({
+        query: GET_PRODUCT_BY_ID,
+        variables: { productId },
+      })
+    ).data;
+
+    dispatch({ type: 'REQUEST_PRODUCT_BY_ID_SUCCESS', payload: { product } });
+  } catch (error) {
+    dispatch({ type: 'REQUEST_PRODUCT_BY_ID_ERROR', payload: 'error' });
   }
 };

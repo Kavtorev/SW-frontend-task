@@ -2,8 +2,9 @@ import React from 'react';
 import { IProduct } from '../../shared';
 import { generateComposedId } from '../../shared/function';
 import { connector, PropsFromRedux } from '../../store';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-interface Props extends PropsFromRedux {
+interface Props extends PropsFromRedux, RouteComponentProps {
   product: IProduct;
   render: (func: () => void) => React.ReactElement;
 }
@@ -48,12 +49,15 @@ class AddToCartButton extends React.Component<Props> {
       cartProducts: { mappedQuantities },
       product,
       localProductAttributeSelections,
+      history,
     } = this.props;
 
     const validationResult = this.validateAttributeSelections();
 
     // display a toast notification or something similar...
-    if (!validationResult) return;
+    if (!validationResult) {
+      return history.push(`/details/${product.id}`);
+    }
 
     const composedId = generateComposedId(
       product,
@@ -73,4 +77,4 @@ class AddToCartButton extends React.Component<Props> {
   }
 }
 
-export default connector(AddToCartButton);
+export default connector(withRouter(AddToCartButton));

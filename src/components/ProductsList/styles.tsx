@@ -5,3 +5,8 @@ export const ProductsListContainer = styled.ul`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
+
+export const InvisibleProductCard = styled.div`
+  width: 386px;
+  height: 444px;
+`;

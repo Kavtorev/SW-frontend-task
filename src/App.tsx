@@ -44,9 +44,9 @@ class App extends React.Component<Props> {
         {isCartPopperOpen && <CartOverlay />}
         <StyledContainer>
           <Switch>
-            <Route path='/cart' component={CartPage} />
-            <Route path='/:category' exact component={CategoryPage} />
+            <Route path='/cart' exact component={CartPage} />
             <Route path='/details/:id' component={ProductPage} />
+            <Route path='/:category' exact component={CategoryPage} />
             <Redirect push={true} to='/all' />
           </Switch>
         </StyledContainer>

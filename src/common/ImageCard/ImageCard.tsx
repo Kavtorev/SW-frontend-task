@@ -8,7 +8,7 @@ interface Props {
   styleBody?: React.CSSProperties;
   styleImage?: React.CSSProperties;
   render?: () => React.ReactElement;
-  handleClick?: () => void;
+  handleOnMouseOver?: () => void;
 }
 
 export class ImageCard extends React.Component<Props> {
@@ -20,12 +20,12 @@ export class ImageCard extends React.Component<Props> {
       styleBody = {},
       styleImage = {},
       render = () => <></>,
-      handleClick,
+      handleOnMouseOver,
     } = this.props;
     return (
       <ImageWrapper
         style={{ width, height, ...styleBody }}
-        onClick={handleClick}
+        onMouseOver={handleOnMouseOver}
       >
         <Image src={src} style={{ ...styleImage }} />
         {render()}

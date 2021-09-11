@@ -1,7 +1,7 @@
 import React from 'react';
 import { connector, PropsFromRedux } from '../../store';
 import { ProductCard } from '../ProductCard';
-import { ProductsListContainer } from './styles';
+import { ProductsListContainer, InvisibleProductCard } from './styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
@@ -34,6 +34,10 @@ class ProductsList extends React.Component<Props> {
         />
       );
     });
+
+    if (window.innerWidth >= 1380 && filteredProducts.length % 3) {
+      renderedProducts.push(<InvisibleProductCard key={nanoid()} />);
+    }
 
     return <ProductsListContainer>{renderedProducts}</ProductsListContainer>;
   }

@@ -39,3 +39,31 @@ export const GET_PRODUCTS_BY_CATEGORY_NAME = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_BY_ID = gql`
+  query GetProductById($productId: String!) {
+    product(id: $productId) {
+      id
+      category
+      name
+      brand
+      inStock
+      description
+      gallery
+      prices {
+        currency
+        amount
+      }
+      attributes {
+        id
+        name
+        type
+        items {
+          id
+          displayValue
+          value
+        }
+      }
+    }
+  }
+`;

@@ -9,7 +9,7 @@ export interface StyledProps {
   disabled?: boolean;
 }
 
-const getColor = ({ selected, size, attributeType, value }: StyledProps) => {
+const getStyles = ({ selected, size, attributeType, value }: StyledProps) => {
   const res = {
     width: '',
     height: '',
@@ -75,14 +75,14 @@ const getColor = ({ selected, size, attributeType, value }: StyledProps) => {
 };
 
 export const StyledAttributeButton = styled(Button)<StyledProps>`
-  width: ${(props) => getColor(props).width};
-  height: ${(props) => getColor(props).height};
+  width: ${(props) => getStyles(props).width};
+  height: ${(props) => getStyles(props).height};
   font-family: var(--source-sans-pro-ff);
   font-weight: var(--fw-normal);
   line-height: 1.125;
-  color: ${(props) => getColor(props).color};
-  background-color: ${(props) => getColor(props).backgroundColor};
-  border: ${(props) => getColor(props).border};
+  color: ${(props) => getStyles(props).color};
+  background-color: ${(props) => getStyles(props).backgroundColor};
+  border: ${(props) => getStyles(props).border};
   padding: 0.5em;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
