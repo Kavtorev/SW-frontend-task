@@ -159,9 +159,17 @@ class ProductPage extends React.Component<Props> {
               />
             </ProductImageWrapper>
             <ProductPagePrimaryDetails>
-              <ProductAdvancedTitle brand={brand} name={name} />
+              <ProductAdvancedTitle
+                brand={brand}
+                name={name}
+                className='mb_product_advanced_title'
+              />
               {renderedAttributeSet}
-              <Price prices={prices} size={'large'} />
+              <Price
+                prices={prices}
+                size={'large'}
+                className='m_product_price'
+              />
               {addToCartButton}
               <ProductDescription
                 dangerouslySetInnerHTML={sanitizedDescription}

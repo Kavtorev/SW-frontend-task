@@ -5,12 +5,14 @@ export const GlobalStyle = createGlobalStyle`
     *, h1, h2, h3, h4, h5, h6{
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-    }
+        box-sizing: border-box;   
+    };
 
     *{       
         font-family: var(--raleway-ff);
         font-size: 16px;
+        scrollbar-width: thin;
+    
     };
 
     :root{
@@ -22,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
         --source-sans-pro-ff: 'Source Sans Pro', sans-serif;
         --raleway-ff: 'Raleway', sans-serif;
         --container-width: 85%;
-        --fs-xs: 0.875rem;
+        --fs-xs: 0.875rem; 
         --fs-s: 1.125rem;
         --fs-m: 1.5rem;
         --fs-l: 1.875rem;
@@ -31,8 +33,8 @@ export const GlobalStyle = createGlobalStyle`
         --fw-medium: 500;
         --fw-semibold: 600;
         --fw-bold: 700;
-        --m-xs: 0.75em;
-        --m-s: 1em;
+        --m-xs: 0.75em; 
+        --m-s: 1em; 
         --m-m: 2em;
         --m-l: 4em;
         --m-xl: 6.25em;
@@ -45,6 +47,18 @@ export const GlobalStyle = createGlobalStyle`
 
     body{
         color: var(--c-black);
-    }
+    };
+
+
+    .mb_product_advanced_title{
+        margin-bottom: calc(var(--m-m) + 0.68em);
+    };
+
+    .m_product_price{
+        margin-top: calc(var(--m-m) + 0.5em);
+        margin-bottom: calc(var(--m-s) + 0.25em);
+    };
+
+    
     
 `;

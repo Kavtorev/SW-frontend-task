@@ -18,7 +18,6 @@ export const ProductPageGallery = styled.div`
 
   height: 510px;
   ${ScrollYAuto}
-  direction: rtl;
 `;
 export const ProductPageDetailsSide = styled.div`
   display: flex;
@@ -30,6 +29,7 @@ export const CartButton = styled(Button)`
   background-color: var(--c-primary);
   border: 0;
   color: #ffffff;
+  margin-bottom: 2.5em;
 `;
 
 export const ProductDescription = styled.div`
@@ -39,7 +39,7 @@ export const ProductDescription = styled.div`
   line-height: 1.625;
   ${ScrollYAuto}
 
-  & > * {
+  &  * {
     font-family: var(--roboto-ff);
   }
 `;

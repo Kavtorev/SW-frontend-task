@@ -36,7 +36,7 @@ export const CartPopperContainer = styled.div`
   background-color: #ffffff;
   padding: var(--p-s) var(--p-m) var(--p-l);
   line-height: 1.6;
-  z-index: 1000;
+  z-index: 999;
   opacity: 1;
 `;
 

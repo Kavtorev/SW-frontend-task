@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledHeader = styled.header`
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
   background-color: white;
   max-width: var(--container-width);
   height: 80px;

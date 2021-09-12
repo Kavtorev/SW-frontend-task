@@ -64,7 +64,7 @@ class CartProductLayout extends React.Component<Props> {
             <ProductBagItemIncreaseButton onClick={this.handleIncreaseClick}>
               <img src={increaseSrc} alt='' />
             </ProductBagItemIncreaseButton>
-            <ProductBagItemQuantity>
+            <ProductBagItemQuantity className='product_bag_item_quantity'>
               {mappedQuantities[composedId]}
             </ProductBagItemQuantity>
             <ProductBagItemDecreaseButton onClick={this.handleDecreaseClick}>

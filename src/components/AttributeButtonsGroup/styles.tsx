@@ -6,6 +6,10 @@ export const AttributeButtonsGroupWrapper = styled.div`
   & > button:not(:first-child) {
     margin-left: var(--m-xs);
   }
+
+  & > button {
+    flex-shrink: 0;
+  }
 `;
 
 export const AttributeName = styled(Title)<{ nameSize: string }>`

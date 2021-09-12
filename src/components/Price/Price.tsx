@@ -10,6 +10,7 @@ interface Props extends PropsFromRedux {
   showTitle?: boolean;
   style?: React.CSSProperties;
   multiplyBy?: number;
+  className?: string;
 }
 
 class Price extends React.Component<Props> {
@@ -21,6 +22,7 @@ class Price extends React.Component<Props> {
       showTitle = true,
       style = {},
       multiplyBy = 1,
+      className = '',
     } = this.props;
 
     const price = prices.find((price) => price.currency === selectedCurrency);
@@ -33,7 +35,7 @@ class Price extends React.Component<Props> {
     const title = showTitle && <PriceTitle>Price:</PriceTitle>;
 
     return (
-      <div>
+      <div className={className}>
         {title}
         <StyledProductPrice size={size} style={{ ...style }}>
           {priceText}
