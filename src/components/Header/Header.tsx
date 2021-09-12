@@ -18,6 +18,10 @@ import { nanoid } from 'nanoid';
 interface Props extends PropsFromRedux {}
 
 class Header extends React.Component<Props> {
+  handleHeaderClick = () => {
+    if (this.props.isCartPopperOpen) this.props.setOpenCartPopper(false);
+  };
+
   render() {
     const { categories } = this.props;
 
@@ -36,7 +40,7 @@ class Header extends React.Component<Props> {
     ));
 
     return (
-      <StyledHeader>
+      <StyledHeader onClick={this.handleHeaderClick}>
         <Navigation>
           <List>{renderedNavLinks}</List>
         </Navigation>
