@@ -5,7 +5,7 @@ import {
   IProduct,
   IAttributeMeta,
 } from '../../shared';
-import { generateComposedId } from '../../shared/function';
+import { generateComposedId } from '../../shared/functions';
 import { connector, PropsFromRedux } from '../../store';
 import { AttributeButtonsGroupWrapper, AttributeName } from './styles';
 
