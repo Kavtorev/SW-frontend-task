@@ -15,9 +15,6 @@ export const ProductPageGallery = styled.div`
   & > div {
     margin-bottom: var(--m-m);
   }
-
-  height: 510px;
-  ${ScrollYAuto}
 `;
 export const ProductPageDetailsSide = styled.div`
   display: flex;

@@ -104,25 +104,23 @@ class ProductPage extends React.Component<Props> {
       </>
     );
 
-    const renderedAttributeSet = attributes.map((set: IAttributeSet) => {
-      return (
-        <AttributeButtonsContainer key={nanoid()}>
-          <AttributeButtonsGroupLocal
-            name={set.name}
-            productId={id}
-            attributeId={set.id}
-            render={(handleSelection, selectedItemId) =>
-              renderAttributeItems(
-                set.type,
-                set.items,
-                handleSelection,
-                selectedItemId
-              )
-            }
-          />
-        </AttributeButtonsContainer>
-      );
-    });
+    const renderedAttributeSet = attributes.map((set: IAttributeSet) => (
+      <AttributeButtonsContainer key={nanoid()}>
+        <AttributeButtonsGroupLocal
+          name={set.name}
+          productId={id}
+          attributeId={set.id}
+          render={(handleSelection, selectedItemId) =>
+            renderAttributeItems(
+              set.type,
+              set.items,
+              handleSelection,
+              selectedItemId
+            )
+          }
+        />
+      </AttributeButtonsContainer>
+    ));
 
     const addToCartButton = inStock && (
       <AddToCartButton
