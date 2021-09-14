@@ -7,6 +7,7 @@ import {
   LogoWrapper,
   LogoImage,
   Item,
+  NavigationContainer,
 } from './styles';
 import logosrc from './assets/Brand icon.svg';
 import Cart from '../Cart/Cart';
@@ -41,16 +42,18 @@ class Header extends React.Component<Props> {
 
     return (
       <StyledHeader onClick={this.handleHeaderClick}>
-        <Navigation>
-          <List>{renderedNavLinks}</List>
-        </Navigation>
-        <LogoWrapper>
-          <LogoImage src={logosrc} alt='Logo' />
-        </LogoWrapper>
-        <ActionsWrapper>
-          <CurrencySwitcher />
-          <Cart />
-        </ActionsWrapper>
+        <NavigationContainer>
+          <Navigation>
+            <List>{renderedNavLinks}</List>
+          </Navigation>
+          <LogoWrapper>
+            <LogoImage src={logosrc} alt='Logo' />
+          </LogoWrapper>
+          <ActionsWrapper>
+            <CurrencySwitcher />
+            <Cart />
+          </ActionsWrapper>
+        </NavigationContainer>
       </StyledHeader>
     );
   }

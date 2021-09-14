@@ -5,12 +5,7 @@ export const StyledHeader = styled.header`
   top: 0;
   z-index: 1000;
   background-color: white;
-  max-width: var(--container-width);
   height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
 `;
 
 export const Navigation = styled.nav`
@@ -58,4 +53,13 @@ export const ActionsWrapper = styled.div`
   & > * {
     margin-left: 1.375em;
   }
+`;
+
+export const NavigationContainer = styled.div`
+  width: var(--container-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 0 auto;
 `;
