@@ -15,7 +15,6 @@ interface Props extends PropsFromRedux {
   decreaseSrc: string;
   rightRender: React.ReactElement;
   productMeta: React.ReactElement;
-  productMetaStyles?: React.CSSProperties;
   composedId: string;
 }
 
@@ -50,15 +49,12 @@ class CartProductLayout extends React.Component<Props> {
       decreaseSrc,
       rightRender,
       productMeta,
-      productMetaStyles,
       cartProducts: { mappedQuantities },
       composedId,
     } = this.props;
     return (
       <ProductBagItemWrapper>
-        <ProductBagItemLeft style={{ ...productMetaStyles }}>
-          {productMeta}
-        </ProductBagItemLeft>
+        <ProductBagItemLeft>{productMeta}</ProductBagItemLeft>
         <ProductBagItemRight>
           <ProductBagItemSettings>
             <ProductBagItemIncreaseButton onClick={this.handleIncreaseClick}>

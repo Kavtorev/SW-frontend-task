@@ -1,11 +1,11 @@
 import React from 'react';
-import { Brand, Name } from './styles';
+import { Brand, Name, BrandClassNames, NameClassNames } from './styles';
 
 interface Props {
   brand: string;
   name: string;
-  brandStyle?: React.CSSProperties;
-  nameStyle?: React.CSSProperties;
+  brandClassName?: BrandClassNames;
+  nameClassName?: NameClassNames;
   className?: string;
 }
 
@@ -14,14 +14,14 @@ export class ProductAdvancedTitle extends React.Component<Props> {
     const {
       brand,
       name,
-      brandStyle = {},
-      nameStyle = {},
+      brandClassName = '',
+      nameClassName = '',
       className = '',
     } = this.props;
     return (
       <div className={className}>
-        <Brand style={{ ...brandStyle }}>{brand}</Brand>
-        <Name style={{ ...nameStyle }}>{name}</Name>
+        <Brand className={brandClassName}>{brand}</Brand>
+        <Name className={nameClassName}>{name}</Name>
       </div>
     );
   }

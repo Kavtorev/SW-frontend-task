@@ -64,13 +64,6 @@ class CartPopper extends React.Component<Props> {
       totalQuantity
     )}`;
 
-    const priceOverridenStyle = {
-      fontWeight: 700,
-      lineHeight: 1.125,
-      fontSize: '1rem',
-      maxWidth: '200px',
-    };
-
     return (
       <ClickAwayListener onClickAway={() => setOpenCartPopper(false)}>
         <CartPopperContainer>
@@ -83,7 +76,7 @@ class CartPopper extends React.Component<Props> {
             <Price
               prices={this.getTotalPrice()}
               showTitle={false}
-              style={priceOverridenStyle}
+              priceClassName='price__cart__popper'
             />
           </CartPopperTotalWrapper>
           <CartPopperFooter>

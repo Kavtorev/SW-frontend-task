@@ -82,8 +82,8 @@ export class CartProductItem extends React.Component<Props> {
         <ProductAdvancedTitle
           brand={brand}
           name={name}
-          brandStyle={{ fontWeight: 300, fontSize: '1rem' }}
-          nameStyle={{ fontWeight: 300, fontSize: '1rem' }}
+          brandClassName='cart__product__item__brand'
+          nameClassName='cart__product__item__name'
         />
         <Price prices={prices} showTitle={false} size='small' />
         {wrappedRenderedAttributeSet}
@@ -92,9 +92,8 @@ export class CartProductItem extends React.Component<Props> {
     const rightRender = (
       <ImageCard
         src={gallery[0]}
-        width='105px'
-        height='100%'
-        styleImage={{ objectFit: 'contain' }}
+        imageBodyClassName='imageBody__cart__product__item'
+        imageClassName='image__cart__product__item'
       />
     );
 

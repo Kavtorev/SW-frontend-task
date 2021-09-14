@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const StyledHeader = styled.header`
   position: sticky;
@@ -62,4 +63,12 @@ export const NavigationContainer = styled.div`
   align-items: center;
   height: 100%;
   margin: 0 auto;
+`;
+
+export const NavLinkStyled = styled(NavLink)`
+  &.active {
+    border-bottom: 2px solid var(--c-primary);
+    color: var(--c-primary);
+    font-weight: 600;
+  }
 `;

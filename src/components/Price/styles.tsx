@@ -5,6 +5,8 @@ interface Props {
   size?: string;
 }
 
+export type PriceClassNames = '' | 'price__cart__popper';
+
 const getStyles = (size: string) => {
   let res: { fontWeight: string; fontSize: string; lineHeight: string } = {
     fontSize: '',
@@ -41,4 +43,11 @@ export const StyledProductPrice = styled.p<Props>`
   font-size: ${(props) => getStyles(props.size || 'normal').fontSize};
   line-height: ${(props) => getStyles(props.size || 'normal').lineHeight};
   ${Truncate}
+
+  &.price__cart__popper {
+    font-weight: var(--fw-bold);
+    line-height: 1.125;
+    font-size: 1rem;
+    max-width: 200px;
+  }
 `;

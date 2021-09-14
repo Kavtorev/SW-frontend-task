@@ -38,10 +38,8 @@ class ProductImageCarousel extends React.Component<Props> {
     return (
       <ImageCard
         src={gallery[currentIndex]}
-        width='140px'
-        height='100%'
-        styleBody={{ position: 'relative' }}
-        styleImage={{ objectFit: 'contain' }}
+        imageBodyClassName='imageBody__product__image__carousel'
+        imageClassName='image__product__image__carousel'
         render={() => <>{imageCardRender}</>}
       />
     );

@@ -72,9 +72,7 @@ class ProductPage extends React.Component<Props> {
       <ImageCard
         key={nanoid()}
         src={imgSrc}
-        width='80px'
-        height='80px'
-        styleBody={{ cursor: 'pointer' }}
+        imageBodyClassName='imageBody__product_page_gallery'
         handleOnMouseOver={() => selectGalleryImage(imgSrc)}
       />
     ));
@@ -82,11 +80,6 @@ class ProductPage extends React.Component<Props> {
     const productHeroImageRender = !inStock && (
       <OutOfStockHolder>Out of stock</OutOfStockHolder>
     );
-
-    const productHeroImageOverridenStyleBody: React.CSSProperties = {
-      position: 'relative',
-      cursor: 'pointer',
-    };
 
     const renderAttributeItems = (
       type: IAttributeSet['type'],
@@ -152,9 +145,7 @@ class ProductPage extends React.Component<Props> {
             <ProductImageWrapper>
               <ImageCard
                 src={selectedGalleryImageSrc}
-                width='610px'
-                height='510px'
-                styleBody={productHeroImageOverridenStyleBody}
+                imageBodyClassName='imageBody__product__page'
                 render={() => <>{productHeroImageRender}</>}
               />
             </ProductImageWrapper>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connector, PropsFromRedux } from '../../store';
-import { StyledProductPrice, PriceTitle } from './styles';
+import { StyledProductPrice, PriceTitle, PriceClassNames } from './styles';
 import { IPrice } from '../../shared';
 import { currencyMapper } from '../../shared/mappers';
 
@@ -8,9 +8,9 @@ interface Props extends PropsFromRedux {
   size?: string;
   prices: IPrice[];
   showTitle?: boolean;
-  style?: React.CSSProperties;
   multiplyBy?: number;
   className?: string;
+  priceClassName?: PriceClassNames;
 }
 
 class Price extends React.Component<Props> {
@@ -20,9 +20,9 @@ class Price extends React.Component<Props> {
       prices,
       selectedCurrency,
       showTitle = true,
-      style = {},
       multiplyBy = 1,
       className = '',
+      priceClassName = '',
     } = this.props;
 
     const price = prices.find((price) => price.currency === selectedCurrency);
@@ -37,7 +37,7 @@ class Price extends React.Component<Props> {
     return (
       <div className={className}>
         {title}
-        <StyledProductPrice size={size} style={{ ...style }}>
+        <StyledProductPrice size={size} className={priceClassName}>
           {priceText}
         </StyledProductPrice>
       </div>

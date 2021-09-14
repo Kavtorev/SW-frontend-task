@@ -38,9 +38,7 @@ export class ProductCard extends React.Component<Props> {
       >
         <ImageCard
           src={gallery[0]}
-          width='354px'
-          height='330px'
-          styleBody={{ position: 'relative' }}
+          imageBodyClassName='imageBody__product__card'
           render={() => <>{imageCardRender}</>}
         />
         <ProductFullName>{productFullName}</ProductFullName>
