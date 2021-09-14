@@ -1,6 +1,6 @@
 import React from 'react';
 import { IProduct } from '../../shared';
-import { generateComposedId } from '../../shared/function';
+import { generateComposedId } from '../../shared/functions';
 import { connector, PropsFromRedux } from '../../store';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
