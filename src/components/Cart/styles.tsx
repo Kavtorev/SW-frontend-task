@@ -30,8 +30,6 @@ export const ItemsHolder = styled.span`
 export const CartPopperContainer = styled.div`
   position: fixed;
   right: 87px;
-  width: 325px;
-  height: 510px;
   display: block;
   background-color: #ffffff;
   padding: var(--p-s) var(--p-m) var(--p-l);

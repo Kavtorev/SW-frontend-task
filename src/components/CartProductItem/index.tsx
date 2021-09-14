@@ -103,7 +103,6 @@ export class CartProductItem extends React.Component<Props> {
         composedId={composedId}
         increaseSrc={plussrc}
         decreaseSrc={minussrc}
-        productMetaStyles={{ maxWidth: '130px' }}
         productMeta={productMeta}
         rightRender={rightRender}
       />

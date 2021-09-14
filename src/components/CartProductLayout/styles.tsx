@@ -9,6 +9,8 @@ export const ProductBagItemLeft = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-right: 1em;
+  min-width: 130px;
 `;
 export const ProductBagItemRight = styled.div`
   display: flex;

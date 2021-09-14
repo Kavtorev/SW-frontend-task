@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Title } from '../../common';
 export const AttributeButtonsGroupWrapper = styled.div`
   display: flex;
-  max-width: 400px;
+
   & > button:not(:first-child) {
     margin-left: var(--m-xs);
   }
