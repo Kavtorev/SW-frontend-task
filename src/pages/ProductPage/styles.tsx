@@ -33,7 +33,6 @@ export const CartButton = styled(Button)`
 `;
 
 export const ProductDescription = styled.div`
-  height: 200px;
   font-family: var(--roboto-ff);
   font-weight: var(--fw-normal);
   line-height: 1.625;
@@ -45,7 +44,6 @@ export const ProductDescription = styled.div`
 `;
 
 export const ProductImageWrapper = styled.div`
-  /* width: 610px; */
   height: 510px;
   margin-right: var(--m-xl);
 `;
