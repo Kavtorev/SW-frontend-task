@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ScrollYAuto } from '../../common';
 
 export const CurrencyMenuContainer = styled.div`
   position: relative;
@@ -28,10 +27,8 @@ export const CurrencyMenuButton = styled.button<{ isMenuOpened: boolean }>`
 export const CurrencyMenuOptionsWrapper = styled.div`
   position: absolute;
   transform: translate(-23px, 7.5px);
-  height: 170px;
   background-color: #ffffff;
   box-shadow: 0px 4px 35px 0px #a8acb030;
-  ${ScrollYAuto};
 `;
 
 export const CurrencyMenuOptions = styled.ul`
