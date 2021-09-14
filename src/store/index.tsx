@@ -8,7 +8,7 @@ import {
   cartReducer,
   attributeReducer,
 } from './reducers';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 import {
   requestInitialData,
   requestProductById,
@@ -30,8 +30,8 @@ export const rootReducers = combineReducers({
   cartRedcucer: cartReducer,
   attributeReducer,
 });
-const logger = createLogger();
-export const store = createStore(rootReducers, applyMiddleware(logger));
+// const logger = createLogger();
+export const store = createStore(rootReducers, applyMiddleware());
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

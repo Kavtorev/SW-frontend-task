@@ -1,12 +1,8 @@
 import styled from 'styled-components';
 
 export const ProductsListContainer = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(386px, 1fr));
   justify-content: space-between;
-`;
-
-export const InvisibleProductCard = styled.div`
-  width: 386px;
-  height: 444px;
+  gap: 2.5rem;
 `;
