@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../common';
-import { ScrollYAuto } from '../../common';
+import { Button, ScrollY } from '../../common';
 
 export const ProductPageWrapper = styled.div`
   display: flex;
@@ -11,6 +10,9 @@ export const ProductPageGallery = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 2.5em;
+  height: 510px;
+
+  ${ScrollY}
 
   & > div {
     margin-bottom: var(--m-m);
@@ -33,9 +35,8 @@ export const ProductDescription = styled.div`
   font-family: var(--roboto-ff);
   font-weight: var(--fw-normal);
   line-height: 1.625;
-  ${ScrollYAuto}
 
-  &  * {
+  & * {
     font-family: var(--roboto-ff);
   }
 `;
